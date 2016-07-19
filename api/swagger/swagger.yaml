@@ -19,40 +19,90 @@ consumes:
 produces:
   - application/json
 paths:
-  /json_object:
+  /object/validate:
     x-swagger-router-controller: json_object
     post:
       description: Validate input object by its json schema
       # used as the method name of the controller
-      operationId: validate
+      operationId: validateObject
       parameters:
         - name: body
           in: body
           required: true
           schema:
+            required:
+              - object
+              - schema
             properties:
               object:
                 type: object
               schema:
                 type: object
-                required:
-                  - name
-                  - type
-                properties:
-                  id:
-                    type: string
-                  $schema:
-                    type: string
-                  name:
-                    type: string
-                  type:
-                    type: string
       responses:
         "200":
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
+            $ref: "#/definitions/ValidationResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /objects/validate:
+      x-swagger-router-controller: json_object
+      post:
+        description: Validate input objects by its json schema
+        # used as the method name of the controller
+        operationId: validate
+        parameters:
+          - name: body
+            in: body
+            required: true
+            schema:
+              required:
+                - objects
+                - schema
+              properties:
+                objects:
+                  type: array
+                  items:
+                    type: object
+                schema:
+                  type: object
+        responses:
+          "200":
+            description: Success
+            schema:
+              # a pointer to a definition
+              $ref: "#/definitions/ValidationResponse"
+          # responses may fall through to errors
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/ErrorResponse"
+  /schema/validate:
+    x-swagger-router-controller: json_schema
+    post:
+      description: Validate input schema
+      # used as the method name of the controller
+      operationId: validateArray
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            required:
+              - schema
+            properties:
+              schema:
+                type: object
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ValidationResponse"
         # responses may fall through to errors
         default:
           description: Error
@@ -62,7 +112,7 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  HelloWorldResponse:
+  ValidationResponse:
     required:
       - message
     properties:
