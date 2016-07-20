@@ -1,6 +1,8 @@
-## JSON Schema Service validator ##
+## JSON Schema Validation service ##
 
-This service validates a json object based on a json schema. JSON schema will be validated as well based on draft/v4 or any custom schema based on draft/v4
+- This service validates a json object based on a JSON schema.
+- JSON schema will be validated as well based on draft/v4 or any meta-schema inheriting draft/v4
+- You can extend the service to force custom fields and custom validation on the input JSON Schema
 
 ## Tech stack ##
 
@@ -20,5 +22,5 @@ swagger project verify # Verify project can be executed
 swagger project test # Run unit tests on every routes
 swagger project start
 ```
-Then open browser on localhost:9000/docs to see SwaggerUI
-Or target API threw its exposed routes (Ex. POST http://localhost:9000/json_object)
+Then open browser on localhost:9000/docs to see documentation of the current API
+Or target API method threw its exposed routes (Ex. POST http://localhost:9000/object/validate)
