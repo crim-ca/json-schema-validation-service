@@ -21,4 +21,4 @@ swagger project test # Run unit tests on every routes
 swagger project start
 ```
 Then open browser on localhost:9000/docs to see SwaggerUI
-Or target API threw its exposed routes (Ex. POST http://10.30.90.174:9000/json_object)
+Or target API threw its exposed routes (Ex. POST http://localhost:9000/json_object)
