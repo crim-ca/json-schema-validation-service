@@ -25,9 +25,11 @@ function validateObject(req, res) {
   //console.log("Received Schema:" + JSON.stringify(schema));
 
   var ajv = new Ajv(/*{ v5: true}*/); // options can be passed, e.g. {allErrors: true}
-  var validate;
+  var validate,
+      valid;
   try {
     validate = ajv.compile(schema);
+    validateObject();
   } catch (err) {
     //422: Unprocessable Entity: JSON Schema is not valid
     res.status(422);
@@ -38,28 +40,31 @@ function validateObject(req, res) {
     });
   }
 
-  try {
-    var valid = validate(object);
+  function validateObject(){
+    try {
+      valid = validate(object);
 
-    if (!valid){
+      if (!valid){
+        res.json({
+          "isValid": false,
+          "errors": validate.errors //valid.errors
+        });
+      }else{
+        res.json({
+          "isValid": true
+        });
+      }
+    } catch (err) {
+      //422: Unprocessable Entity: JSON Object might also not be valid but this should never happen
+      res.status(422);
       res.json({
-        "isValid": false,
-        "errors": validate.errors //valid.errors
-      });
-    }else{
-      res.json({
-        "isValid": true
+        "message": "Ajv " + err,
+        "code": "AJV_OBJECT_VALIDATION_FAILED",
+        "failedValidation": true
       });
     }
-  } catch (err) {
-    //422: Unprocessable Entity: JSON Object might also not be valid but this should never happen
-    res.status(422);
-    res.json({
-      "message": "Ajv " + err,
-      "code": "AJV_OBJECT_VALIDATION_FAILED",
-      "failedValidation": true
-    });
   }
+
 
 
 }

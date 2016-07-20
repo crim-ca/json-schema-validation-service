@@ -12,34 +12,51 @@ describe('controllers', function () {
 
     describe('POST /object/validate', function () {
 
-      it('should return an error if body is missing', function (done) {
+      it('should return an error 400 if body is missing', function (done) {
 
         request(server)
           .post('/object/validate')
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
-          .expect(200)
+          .expect(400)
           .end(function (err, res) {
-            should.exist(err);
+            should.not.exist(err);
+            //res.status.should.eql(400);
             done();
           });
       });
 
-      it('should return an error if schema is missing from body', function (done) {
+      it('should return an error 400 if schema is missing from body', function (done) {
 
         request(server)
           .post('/object/validate')
           .send({object: {}})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
-          .expect(200)
+          .expect(400)
           .end(function (err, res) {
-            should.exist(err);
+            should.not.exist(err);
             done();
           });
       });
 
-      it('should accept master schema and valid faceDetect object', function (done) {
+      it('should return an error 422 if schema is an invalid json schema', function (done) {
+
+        request(server)
+          .post('/object/validate')
+          .send({ schema: { "required": "yolo123"}, object: { yolo : 123}})
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(422)
+          .end(function (err, res) {
+            should.not.exist(err);
+            should.exist(res.body.code);
+            should.exist(res.body.message);
+            done();
+          });
+      });
+
+      it('should accept master schema and a valid faceDetect object', function (done) {
 
         request(server)
           .post('/object/validate')
@@ -54,7 +71,7 @@ describe('controllers', function () {
           });
       });
 
-      it('should accept multimedia_document_content schema and valid faceDetect object', function (done) {
+      it('should accept multimedia_document_content schema and a valid faceDetect object', function (done) {
 
         request(server)
           .post('/object/validate')
@@ -69,17 +86,20 @@ describe('controllers', function () {
           });
       });
 
-      it('should refuse multimedia_document_content schema and invalid faceDetect object', function (done) {
+      it('should return { isValid: false, errors: [] } with multimedia_document_content schema and invalid faceDetect object', function (done) {
 
         request(server)
           .post('/object/validate')
-          .send({schema: { schema: targetSchemas.multimedia_document_content, object: { yolo : 123}}})
+          .send({schema: targetSchemas.multimedia_document_content, object: { yolo : 123}})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(200)
           .end(function (err, res) {
-            should.exist(err);
-            res.body.should.not.eql({ isValid: true });
+            //TODO fix
+            should.not.exist(err);
+            should.exist(res.body.isValid);
+            should.exist(res.body.errors);
+            res.body.isValid.should.eql(false);
             done();
           });
       });
