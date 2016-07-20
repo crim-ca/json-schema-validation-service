@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
+  title: Schema validation service
 # during dev, should point to your local machine
 host: 10.30.90.174:9000
 
@@ -44,6 +44,10 @@ paths:
           schema:
             # a pointer to a definition
             $ref: "#/definitions/ValidationResponse"
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: "#/definitions/ErrorUnprocessableEntityResponse"
         # responses may fall through to errors
         default:
           description: Error
@@ -104,6 +108,10 @@ paths:
             # a pointer to a definition
             $ref: "#/definitions/ValidationResponse"
         # responses may fall through to errors
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: "#/definitions/ErrorUnprocessableEntityResponse"
         default:
           description: Error
           schema:
@@ -114,10 +122,24 @@ paths:
 definitions:
   ValidationResponse:
     required:
-      - message
+      - isValid
     properties:
-      message:
-        type: string
+      isValid:
+        type: boolean
+      errors:
+        type: array
+        items:
+          type: object
+  #Usefull? Not so sure
+  ErrorUnprocessableEntityResponse:
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        code:
+          type: string
   ErrorResponse:
     required:
       - message
