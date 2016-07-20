@@ -49,7 +49,7 @@ describe('controllers', function () {
           .expect(200)
           .end(function (err, res) {
             should.not.exist(err);
-            res.body.should.eql('true');
+            res.body.should.eql({ isValid: true });
             done();
           });
       });
@@ -64,7 +64,7 @@ describe('controllers', function () {
           .expect(200)
           .end(function (err, res) {
             should.not.exist(err);
-            res.body.should.eql('true');
+            res.body.should.eql({ isValid: true });
             done();
           });
       });
@@ -79,7 +79,7 @@ describe('controllers', function () {
           .expect(200)
           .end(function (err, res) {
             should.exist(err);
-            res.body.should.not.eql('true');
+            res.body.should.not.eql({ isValid: true });
             done();
           });
       });
