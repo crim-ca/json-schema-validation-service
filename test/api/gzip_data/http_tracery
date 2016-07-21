@@ -1,0 +1,35 @@
+== Info: Could not resolve host: _NE_11k.json.gz; Nom ou service inconnu
+== Info: Closing connection 0
+== Info: About to connect() to 10.30.90.174 port 9000 (#1)
+== Info:   Trying 10.30.90.174...
+== Info: Connected to 10.30.90.174 (10.30.90.174) port 9000 (#1)
+=> Send header, 165 bytes (0xa5)
+0000: POST /objects/gzipped/validate HTTP/1.1
+0029: User-Agent: curl/7.29.0
+0042: Host: 10.30.90.174:9000
+005b: Accept: */*
+0068: Content-Type: multipart/form-data
+008b: Content-Encoding: gzip
+00a3: 
+<= Recv header, 26 bytes (0x1a)
+0000: HTTP/1.1 400 Bad Request
+<= Recv header, 23 bytes (0x17)
+0000: X-Powered-By: Express
+<= Recv header, 32 bytes (0x20)
+0000: Access-Control-Allow-Origin: *
+<= Recv header, 32 bytes (0x20)
+0000: Content-Type: application/json
+<= Recv header, 37 bytes (0x25)
+0000: Date: Thu, 21 Jul 2016 20:12:51 GMT
+<= Recv header, 24 bytes (0x18)
+0000: Connection: keep-alive
+<= Recv header, 21 bytes (0x15)
+0000: Content-Length: 199
+<= Recv header, 2 bytes (0x2)
+0000: 
+<= Recv data, 199 bytes (0xc7)
+0000: {"message":"Request validation failed: Parameter (file) is requi
+0040: red","code":"REQUIRED","failedValidation":true,"path":["paths","
+0080: /objects/gzipped/validate","post","parameters","0"],"paramName":
+00c0: "file"}
+== Info: Connection #1 to host 10.30.90.174 left intact

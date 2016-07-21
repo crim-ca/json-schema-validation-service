@@ -10,8 +10,13 @@ var mockObjects = require('../mock_data/mock_objects');
 //Even if we could swagger will freeze when validating such a large schema, replace objects and schema by "something" to get threw this
 // curl -X POST -H "Content-Type: application/json" --data '{"something":{"schema":{},"objects":"'$(cat NE_22k_example.json)'-"}}' http://10.30.90.174:9000/objects/validate
 
-//SOLUTION
+//SOLUTION (OLD: before param named file)
 //curl -v -s --trace-ascii http_tracery @_NE_22k_example.json.gz -H "Content-Type: application/json" -H "Content-Encoding: gzip" -X POST http://10.30.90.174:9000/objects/gzipped/validate
+
+//SOLUTION(NEW)
+// $ cd test/api/gzip_data
+// TRUE $ curl -F "file=@NE_111k.json.gz" http:10.30.90.174:9000/objects/gzipped/validate
+// FALSE $ curl -F "file=@NE_111k_with_errors.json.gz" http:10.30.90.174:9000/objects/gzipped/validate
 var objects22k = [{"_start": 123}, {"_start": 12223}];
 var basic = {
   "required": [ "_start"]
@@ -130,6 +135,41 @@ describe('controllers', function () {
             //should.not.exist(err);
             console.log(res.body);
             //res.body.isValid.should.eql(true);
+            done();
+          });
+      });
+    });
+
+    describe('POST /objects/gzipped/validate', function () {
+
+      it('should return { isValid : true } with 111k', function (done) {
+        request(server)
+          .post('/objects/gzipped/validate')
+          .attach('file', './test/api/gzip_data/NE_111k.json.gz')
+          //.send({schema: basic, objects: objects22k})
+          //.set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            //console.log(res.body);
+            res.body.isValid.should.eql(true);
+            done();
+          });
+      });
+
+      it('should return { isValid : false } with 111k_with_errors', function (done) {
+        request(server)
+          .post('/objects/gzipped/validate')
+          .attach('file', './test/api/gzip_data/NE_111k_with_errors.json.gz')
+          //.send({schema: basic, objects: objects22k})
+          //.set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            //console.log(res.body);
+            res.body.isValid.should.eql(false);
             done();
           });
       });

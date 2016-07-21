@@ -41,7 +41,7 @@ function validadeAjvArray(res, schema, objects, date1){
     objects.forEach(function(object, i){
       valid = validate(object);
       if(!valid){
-        console.log("error found at " + i + validate.errors)
+        //console.log("error found at " + i + validate.errors)
         var current = validate.errors;
         current[0].number = i;
         errors = errors.concat(current);
@@ -49,7 +49,7 @@ function validadeAjvArray(res, schema, objects, date1){
     });
   }
   var date2 = new Date();
-  console.log(errors);
+  //console.log(errors);
   console.log("Completed " + objects.length + " objects in " + (date2 - date1) + "ms");
 
   if (errors.length){
