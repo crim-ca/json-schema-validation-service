@@ -5,6 +5,17 @@ var server = require('../../../app');
 var mockSchemas = require('../mock_data/mock_schemas');
 var targetSchemas = require('../mock_data/target_schemas');
 var mockObjects = require('../mock_data/mock_objects');
+//var objects22k = require('../mock_data/NE_22k_example.json');
+//We can't send large object with supertest at this point
+//Even if we could swagger will freeze when validating such a large schema, replace objects and schema by "something" to get threw this
+// curl -X POST -H "Content-Type: application/json" --data '{"something":{"schema":{},"objects":"'$(cat NE_22k_example.json)'-"}}' http://10.30.90.174:9000/objects/validate
+
+//SOLUTION
+//curl -v -s --trace-ascii http_tracery @_NE_22k_example.json.gz -H "Content-Type: application/json" -H "Content-Encoding: gzip" -X POST http://10.30.90.174:9000/objects/gzipped/validate
+var objects22k = [{"_start": 123}, {"_start": 12223}];
+var basic = {
+  "required": [ "_start"]
+};
 
 describe('controllers', function () {
 
@@ -104,6 +115,24 @@ describe('controllers', function () {
           });
       });
 
+    });
+
+    describe('POST /objects/validate', function () {
+
+      it('should return { isValid : true } with objects22k', function (done) {
+        request(server)
+          .post('/objects/validate')
+          .send({schema: basic, objects: objects22k})
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            //should.not.exist(err);
+            console.log(res.body);
+            //res.body.isValid.should.eql(true);
+            done();
+          });
+      });
     });
 
   });

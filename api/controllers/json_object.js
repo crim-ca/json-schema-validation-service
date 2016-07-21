@@ -1,20 +1,67 @@
 'use strict';
 
-var util = require('util');
-var Ajv = require('ajv');
+var util = require('util'),
+    Ajv = require('ajv'),
+    zlib = require("zlib");
 
 module.exports = {
   validateObject: validateObject,
-  validateArray: validateArray
+  validateArray: validateArray,
+  validateBatchArray: validateBatchArray
 };
 
+function validateBatchArray(req, res) {
+  var file = req.swagger.params.file.originalValue.buffer;
+
+  zlib.gunzip(file, function(err, dezipped) {
+    var obj = JSON.parse(dezipped)
+    console.log(obj.data.length);
+    validadeAjvArray(res, { "required" : ["_start"]}, obj.data);
+  });
+}
+
 function validateArray(req, res) {
-  const objects = req.swagger.params.body.schema.objects;
-  const schema = req.swagger.params.body.schema.schema;
+  const objects = req.swagger.params.body.originalValue.objects;
+  //const objects = require('../../test/api/mock_data/NE_22k_example_with_error.json').data;
+  const schema = req.swagger.params.body.originalValue.schema;
 
+  validadeAjvArray(res, schema, objects);
+}
+
+function validadeAjvArray(res, schema, objects){
   //TODO
+  var date1 = new Date();
+  var ajv = new Ajv();
+  var validate = ajv.compile(schema);
+  //var objects = require('../../test/api/mock_data/NE_22k_example_with_error.json');
+  var errors = [];
+  var valid;
 
-  res.json(util.format(true));
+  if(objects.length){
+    objects.forEach(function(object, i){
+      valid = validate(object);
+      if(!valid){
+        console.log("error found at " + i + validate.errors)
+        var current = validate.errors;
+        current[0].number = i;
+        errors = errors.concat(current);
+      }
+    });
+  }
+  var date2 = new Date();
+  console.log(errors);
+  console.log("Completed " + objects.length + " objects in " + (date2 - date1) + "ms");
+
+  if (errors.length){
+    res.json({
+      "isValid": false,
+      "errors": errors
+    });
+  }else{
+    res.json({
+      "isValid": true
+    });
+  }
 }
 
 function validateObject(req, res) {
@@ -25,11 +72,10 @@ function validateObject(req, res) {
   //console.log("Received Schema:" + JSON.stringify(schema));
 
   var ajv = new Ajv(/*{ v5: true}*/); // options can be passed, e.g. {allErrors: true}
-  var validate,
-      valid;
+  var validate;
   try {
     validate = ajv.compile(schema);
-    validateObject();
+    validateAjvObject(object, validate);
   } catch (err) {
     //422: Unprocessable Entity: JSON Schema is not valid
     res.status(422);
@@ -40,7 +86,9 @@ function validateObject(req, res) {
     });
   }
 
-  function validateObject(){
+  function validateAjvObject(object, validate){
+    var result = {},
+        valid;
     try {
       valid = validate(object);
 

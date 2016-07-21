@@ -13,7 +13,8 @@ SwaggerExpress.create(config, function (err, swaggerExpress) {
   if (err) {
     throw err;
   }
-
+  var bodyParser = require('body-parser');
+  app.use(bodyParser.json({limit: '150mb'}));
   app.use(SwaggerUi(swaggerExpress.runner.swagger));
 
   // install middleware
