@@ -11,26 +11,26 @@ module.exports = {
 };
 
 function validateBatchArray(req, res) {
+  var date1 = new Date();
   var file = req.swagger.params.file.originalValue.buffer;
 
   zlib.gunzip(file, function(err, dezipped) {
     var obj = JSON.parse(dezipped)
-    console.log(obj.data.length);
-    validadeAjvArray(res, { "required" : ["_start"]}, obj.data);
+    validadeAjvArray(res, obj.schema, obj.objects, date1);
   });
 }
 
 function validateArray(req, res) {
+  var date1 = new Date();
   const objects = req.swagger.params.body.originalValue.objects;
   //const objects = require('../../test/api/mock_data/NE_22k_example_with_error.json').data;
   const schema = req.swagger.params.body.originalValue.schema;
 
-  validadeAjvArray(res, schema, objects);
+  validadeAjvArray(res, schema, objects, date1);
 }
 
-function validadeAjvArray(res, schema, objects){
+function validadeAjvArray(res, schema, objects, date1){
   //TODO
-  var date1 = new Date();
   var ajv = new Ajv();
   var validate = ajv.compile(schema);
   //var objects = require('../../test/api/mock_data/NE_22k_example_with_error.json');
