@@ -8,6 +8,7 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
+    "ajv": "^4.1.7",
     "express": "^4.12.3",
     "swagger-express-mw": "^0.1.0",
     "swagger-tools": "^0.10.1"
