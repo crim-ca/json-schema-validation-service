@@ -19,7 +19,8 @@
     "swagger": "^0.7.5"
   },
   "scripts": {
-    "start": "node $NODE_DEBUG_OPTION --expose_debug_as=v8debug app.js",
+    "debug": "node $NODE_DEBUG_OPTION --expose_debug_as=v8debug app.js",
+    "start": "swagger project start",
     "test": "swagger project verify && swagger project test"
   }
 }

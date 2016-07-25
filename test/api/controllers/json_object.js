@@ -208,7 +208,7 @@ describe('controllers', function () {
           });
       });
 
-      it('should return { isValid : true } with 111k_complex_schema', function (done) {
+      /*it('should return { isValid : true } with 111k_complex_schema', function (done) {
         this.timeout(50000);
         request(server)
           .post('/objects/gzipped/validate')
@@ -220,7 +220,7 @@ describe('controllers', function () {
             res.body.isValid.should.eql(false);
             done();
           });
-      });
+      });*/
     });
 
   });

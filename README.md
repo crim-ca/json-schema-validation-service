@@ -18,7 +18,8 @@ Prerequisites : NodeJS 6.2.2+ & NPM 3.8.9+
 ```bash
 npm install
 npm test
-npm start
+npm start #prod
+npm debug #dev debug, works with webstorm + node v6.2.2
 ```
 ```bash
 npm install swagger -g
