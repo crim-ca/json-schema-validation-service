@@ -19,8 +19,12 @@ Prerequisites : NodeJS 6.2.2+ & NPM 3.8.9+
 npm install
 npm test
 npm start #prod
-npm debug #dev debug, works with webstorm + node v6.2.2
+#npm run debug #dev debug, works with webstorm + node v6.2.2
 ```
+
+Then open browser on localhost:9000/docs to see documentation of the current API
+Or target API method threw its exposed routes (Ex. POST http://localhost:9000/object/validate)
+
 Node-Swagger commands:
 ```bash
 npm install swagger -g
@@ -28,6 +32,3 @@ swagger project verify # Verify project can be executed
 swagger project test # Run unit tests on every routes
 swagger project start
 ```
-
-Then open browser on localhost:9000/docs to see documentation of the current API
-Or target API method threw its exposed routes (Ex. POST http://localhost:9000/object/validate)
