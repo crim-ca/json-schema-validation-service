@@ -3,7 +3,7 @@ info:
   version: "0.0.1"
   title: Schema validation service
 # during dev, should point to your local machine
-host: 10.10.30.52:9000
+host: 10.10.20.52:9000
 
 # basePath prefixes all resource paths 
 basePath: /
