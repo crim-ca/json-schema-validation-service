@@ -142,12 +142,10 @@ describe('controllers', function () {
 
     describe('POST /objects/gzipped/validate', function () {
 
-      it('should return { isValid : true } with 111k', function (done) {
+      it('should return { isValid : true } with 22k', function (done) {
         request(server)
           .post('/objects/gzipped/validate')
-          .attach('file', './test/api/gzip_data/NE_111k.json.gz')
-          //.send({schema: basic, objects: objects22k})
-          //.set('Accept', 'application/json')
+          .attach('file', './test/api/gzip_data/NE_22k.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
           .end(function (err, res) {
@@ -158,18 +156,40 @@ describe('controllers', function () {
           });
       });
 
-      it('should return { isValid : false } with 111k_with_errors', function (done) {
+      it('should return { isValid : false } with 22k_with_errors', function (done) {
         request(server)
           .post('/objects/gzipped/validate')
-          .attach('file', './test/api/gzip_data/NE_111k_with_errors.json.gz')
-          //.send({schema: basic, objects: objects22k})
-          //.set('Accept', 'application/json')
+          .attach('file', './test/api/gzip_data/NE_22k_with_error.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
           .end(function (err, res) {
             should.not.exist(err);
             //console.log(res.body);
             res.body.isValid.should.eql(false);
+            done();
+          });
+      });
+
+      it('should return 400 with 22k_missing_schema', function (done) {
+        request(server)
+          .post('/objects/gzipped/validate')
+          .attach('file', './test/api/gzip_data/NE_22k_missing_schema.json.gz')
+          .expect('Content-Type', /json/)
+          .expect(400)
+          .end(function (err, res) {
+            should.not.exist(err);
+            done();
+          });
+      });
+
+      it('should return 422 with 22k_invalid_schema', function (done) {
+        request(server)
+          .post('/objects/gzipped/validate')
+          .attach('file', './test/api/gzip_data/NE_22k_invalid_schema.json.gz')
+          .expect('Content-Type', /json/)
+          .expect(422)
+          .end(function (err, res) {
+            should.not.exist(err);
             done();
           });
       });
