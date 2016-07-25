@@ -21,6 +21,7 @@ npm test
 npm start #prod
 npm debug #dev debug, works with webstorm + node v6.2.2
 ```
+Node-Swagger commands:
 ```bash
 npm install swagger -g
 swagger project verify # Verify project can be executed
