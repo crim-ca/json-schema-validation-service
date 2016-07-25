@@ -21,7 +21,7 @@ SwaggerExpress.create(config, function (err, swaggerExpress) {
   swaggerExpress.register(app);
 
   var port = process.env.PORT || 9000;
-  var host = process.env.HOST || '10.30.90.174';
+  var host = process.env.HOST || '10.10.30.52';
   app.listen(port, host);
 
   if (swaggerExpress.runner.swagger.paths['/hello']) {
