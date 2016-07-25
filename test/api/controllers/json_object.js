@@ -5,18 +5,23 @@ var server = require('../../../app');
 var mockSchemas = require('../mock_data/mock_schemas');
 var targetSchemas = require('../mock_data/target_schemas');
 var mockObjects = require('../mock_data/mock_objects');
-//var objects22k = require('../mock_data/NE_22k_example.json');
-//We can't send large object with supertest at this point
-//Even if we could swagger will freeze when validating such a large schema, replace objects and schema by "something" to get threw this
-// curl -X POST -H "Content-Type: application/json" --data '{"something":{"schema":{},"objects":"'$(cat NE_22k_example.json)'-"}}' http://10.30.90.174:9000/objects/validate
 
-//SOLUTION (OLD: before param named file)
-//curl -v -s --trace-ascii http_tracery @_NE_22k_example.json.gz -H "Content-Type: application/json" -H "Content-Encoding: gzip" -X POST http://10.30.90.174:9000/objects/gzipped/validate
+//BATCH ARRAY VALIDATION:
+// 1- We can't send large object with supertest at this point (POST objects/validate is for small arrays)
+//    Even if we could swagger will freeze when validating such a large dataset, replace objects and schema by "something" to get threw this
+//    Following CURL will fail but this is an example:
+//    $ curl -X POST -H "Content-Type: application/json" --data '{"something":{"schema":{},"objects":"'$(cat NE_22k_example.json)'-"}}' http://10.30.90.174:9000/objects/validate
+//
+// 2- To send large number of object use the POST objects/gzipped/validate and attach to it a gzipped json file containing {schema: {} and objects: []}
+//    Following curl was used at some point before sending multipart/form-data and a param named "file"
+//    $ curl -v -s --trace-ascii http_tracery @_NE_22k_example.json.gz -H "Content-Type: application/json" -H "Content-Encoding: gzip" -X POST http://10.30.90.174:9000/objects/gzipped/validate
+//
+// 3- Method POST objects/gzipped/valdiate now attends multipart/form-data so we can retreive file inside the express api
+//    Both following curls commands actually should still works
+//    TRUE <= $ curl -F "file=@NE_111k.json.gz" http:10.30.90.174:9000/objects/gzipped/validate
+//    FALSE <= $ curl -F "file=@NE_111k_with_errors.json.gz" http:10.30.90.174:9000/objects/gzipped/validate
+//    But now supertest method attach() support attached files with multipart/form-data so curl are kinda useless
 
-//SOLUTION(NEW)
-// $ cd test/api/gzip_data
-// TRUE $ curl -F "file=@NE_111k.json.gz" http:10.30.90.174:9000/objects/gzipped/validate
-// FALSE $ curl -F "file=@NE_111k_with_errors.json.gz" http:10.30.90.174:9000/objects/gzipped/validate
 var objects22k = [{"_start": 123}, {"_start": 12223}];
 var basic = {
   "required": [ "_start"]
