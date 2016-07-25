@@ -194,6 +194,33 @@ describe('controllers', function () {
             done();
           });
       });
+
+      it('should return { isValid : true } with 111k', function (done) {
+        request(server)
+          .post('/objects/gzipped/validate')
+          .attach('file', './test/api/gzip_data/NE_111k.json.gz')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.isValid.should.eql(true);
+            done();
+          });
+      });
+
+      it('should return { isValid : true } with 111k_complex_schema', function (done) {
+        this.timeout(50000);
+        request(server)
+          .post('/objects/gzipped/validate')
+          .attach('file', './test/api/gzip_data/NE_111k_complex_schema.json.gz')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.isValid.should.eql(false);
+            done();
+          });
+      });
     });
 
   });

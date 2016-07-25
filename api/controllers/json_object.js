@@ -11,7 +11,7 @@ module.exports = {
 };
 
 function validateBatchArray(req, res) {
-  var startingData = new Date();
+  var startingDate = new Date();
   var file = req.swagger.params.file.originalValue.buffer;
 
   zlib.gunzip(file, function(err, dezipped) {
@@ -19,7 +19,7 @@ function validateBatchArray(req, res) {
     if(obj.schema &&  obj.objects){
       validadeAjvArray(obj.schema, obj.objects, function(json, status){
         var endingDate = new Date();
-        //console.log("Completed " + obj.objects.length + " objects in " + (endingDate - startingData) + "ms");
+        console.log("Completed " + obj.objects.length + " objects in " + (endingDate - startingDate) + "ms");
         res.status(status);
         res.json(json);
       });
@@ -56,14 +56,14 @@ function validateBatchArray(req, res) {
 }
 
 function validateArray(req, res) {
-  var startingData = new Date();
+  var startingDate = new Date();
   const objects = req.swagger.params.body.originalValue.objects;
   //const objects = require('../../test/api/mock_data/NE_22k_example_with_error.json').data;
   const schema = req.swagger.params.body.originalValue.schema;
 
   validadeAjvArray(schema, objects, function(json, status){
     var endingDate = new Date();
-    //console.log("Completed " + objects.length + " objects in " + (endingDate - startingData) + "ms");
+    //console.log("Completed " + objects.length + " objects in " + (endingDate - startingDate) + "ms");
     res.status(status);
     res.json(json);
   });
