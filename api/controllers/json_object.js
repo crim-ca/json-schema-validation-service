@@ -19,7 +19,7 @@ function validateBatchArray(req, res) {
     if(obj.schema &&  obj.objects){
       validadeAjvArray(obj.schema, obj.objects, function(json, status){
         var endingDate = new Date();
-        console.log("Completed " + obj.objects.length + " objects in " + (endingDate - startingData) + "ms");
+        //console.log("Completed " + obj.objects.length + " objects in " + (endingDate - startingData) + "ms");
         res.status(status);
         res.json(json);
       });
@@ -63,7 +63,7 @@ function validateArray(req, res) {
 
   validadeAjvArray(schema, objects, function(json, status){
     var endingDate = new Date();
-    console.log("Completed " + objects.length + " objects in " + (endingDate - startingData) + "ms");
+    //console.log("Completed " + objects.length + " objects in " + (endingDate - startingData) + "ms");
     res.status(status);
     res.json(json);
   });
@@ -148,7 +148,7 @@ function validadeAjvArray(schema, objects, callback){
       objects.forEach(function(object, i){
         valid = validate(object);
         if(!valid){
-          console.log("Ajv Error found for object " + i);
+          //console.log("Ajv Error found for object " + i);
           var current = validate.errors;
           current[0].number = i;
           errors = errors.concat(current);

@@ -132,9 +132,7 @@ describe('controllers', function () {
           .expect('Content-Type', /json/)
           .expect(200)
           .end(function (err, res) {
-            //should.not.exist(err);
-            console.log(res.body);
-            //res.body.isValid.should.eql(true);
+            should.not.exist(err);
             done();
           });
       });
@@ -150,7 +148,6 @@ describe('controllers', function () {
           .expect(200)
           .end(function (err, res) {
             should.not.exist(err);
-            //console.log(res.body);
             res.body.isValid.should.eql(true);
             done();
           });
@@ -164,7 +161,6 @@ describe('controllers', function () {
           .expect(200)
           .end(function (err, res) {
             should.not.exist(err);
-            //console.log(res.body);
             res.body.isValid.should.eql(false);
             done();
           });
