@@ -138,7 +138,7 @@ const faceDetectWithRef = {
 
 const token = {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "http://adnotare.crim.ca/schema/custom-meta-schema#",
+  "id": "Token_EN",
   "title": "Token_EN",
   "type": "object",
   "targetType": "text_document_surface",

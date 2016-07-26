@@ -2,11 +2,9 @@ swagger: "2.0"
 info:
   version: "0.0.1"
   title: Schema validation service
-# during dev, should point to your local machine
-host: 10.30.90.174:9000
 
 # basePath prefixes all resource paths 
-basePath: /
+basePath: /psc-schema-validation-service
 # 
 schemes:
   # tip: remove http to make production-grade
@@ -58,7 +56,7 @@ paths:
       post:
         description: Validate input objects by its json schema
         # used as the method name of the controller
-        operationId: validate
+        operationId: validateArray
         parameters:
           - name: body
             in: body
@@ -80,11 +78,45 @@ paths:
             schema:
               # a pointer to a definition
               $ref: "#/definitions/ValidationResponse"
+          "422":
+            description: Unprocessable Entity
+            schema:
+              $ref: "#/definitions/ErrorUnprocessableEntityResponse"
           # responses may fall through to errors
           default:
             description: Error
             schema:
               $ref: "#/definitions/ErrorResponse"
+  /objects/gzipped/validate:
+    x-swagger-router-controller: json_object
+    post:
+      consumes:
+        - multipart/form-data
+        #- application/x-gzip
+      description: Validate input objects by its json schema
+      # used as the method name of the controller
+      operationId: validateBatchArray
+      parameters:
+        - name: file
+          in: formData
+          description: the attachment content
+          required: true
+          type: file
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/ValidationResponse"
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: "#/definitions/ErrorUnprocessableEntityResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /schema/validate:
     x-swagger-router-controller: json_schema
     post:
@@ -132,14 +164,14 @@ definitions:
           type: object
   #Usefull? Not so sure
   ErrorUnprocessableEntityResponse:
-      required:
-        - message
-        - code
-      properties:
-        message:
-          type: string
-        code:
-          type: string
+    required:
+      - message
+      - code
+    properties:
+      message:
+        type: string
+      code:
+        type: string
   ErrorResponse:
     required:
       - message
