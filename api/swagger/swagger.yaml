@@ -4,7 +4,7 @@ info:
   title: Schema validation service
 
 # basePath prefixes all resource paths 
-basePath: /
+basePath: /psc-schema-validation-service
 # 
 schemes:
   # tip: remove http to make production-grade
