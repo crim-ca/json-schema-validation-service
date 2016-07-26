@@ -22,8 +22,8 @@ npm start #prod
 #npm run debug #dev debug, works with webstorm + node v6.2.2
 ```
 
-Then open browser on localhost:9000/docs to see documentation of the current API
-Or target API method threw its exposed routes (Ex. POST http://localhost:9000/object/validate)
+Then open browser on localhost:9000/psc-schema-validation-service/docs to see documentation of the current API
+Or target API method threw its exposed routes (Ex. POST http://localhost:9000/psc-schema-validation-service/object/validate)
 
 Node-Swagger commands:
 ```bash
