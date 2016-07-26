@@ -36,7 +36,7 @@ describe('controllers', function () {
       it('should return an error 400 if body is missing', function (done) {
 
         request(server)
-          .post('/object/validate')
+          .post('/psc-schema-validation-service/object/validate')
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(400)
@@ -50,7 +50,7 @@ describe('controllers', function () {
       it('should return an error 400 if schema is missing from body', function (done) {
 
         request(server)
-          .post('/object/validate')
+          .post('/psc-schema-validation-service/object/validate')
           .send({object: {}})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
@@ -64,7 +64,7 @@ describe('controllers', function () {
       it('should return an error 422 if schema is an invalid json schema', function (done) {
 
         request(server)
-          .post('/object/validate')
+          .post('/psc-schema-validation-service/object/validate')
           .send({ schema: { "required": "yolo123"}, object: { yolo : 123}})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
@@ -80,7 +80,7 @@ describe('controllers', function () {
       it('should accept master schema and a valid faceDetect object', function (done) {
 
         request(server)
-          .post('/object/validate')
+          .post('/psc-schema-validation-service/object/validate')
           .send({schema: targetSchemas.master, object: mockObjects.faceValid})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
@@ -95,7 +95,7 @@ describe('controllers', function () {
       it('should accept multimedia_document_content schema and a valid faceDetect object', function (done) {
 
         request(server)
-          .post('/object/validate')
+          .post('/psc-schema-validation-service/object/validate')
           .send({schema: targetSchemas.multimedia_document_content, object: mockObjects.faceValid})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
@@ -110,7 +110,7 @@ describe('controllers', function () {
       it('should return { isValid: false, errors: [] } with multimedia_document_content schema and invalid faceDetect object', function (done) {
 
         request(server)
-          .post('/object/validate')
+          .post('/psc-schema-validation-service/object/validate')
           .send({schema: targetSchemas.multimedia_document_content, object: { yolo : 123}})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
@@ -131,7 +131,7 @@ describe('controllers', function () {
 
       it('should return { isValid : true } with objects22k', function (done) {
         request(server)
-          .post('/objects/validate')
+          .post('/psc-schema-validation-service/objects/validate')
           .send({schema: basic, objects: objects22k})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
@@ -147,7 +147,7 @@ describe('controllers', function () {
 
       it('should return { isValid : true } with 22k', function (done) {
         request(server)
-          .post('/objects/gzipped/validate')
+          .post('/psc-schema-validation-service/objects/gzipped/validate')
           .attach('file', './test/api/gzip_data/NE_22k.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
@@ -160,7 +160,7 @@ describe('controllers', function () {
 
       it('should return { isValid : false } with 22k_with_errors', function (done) {
         request(server)
-          .post('/objects/gzipped/validate')
+          .post('/psc-schema-validation-service/objects/gzipped/validate')
           .attach('file', './test/api/gzip_data/NE_22k_with_error.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
@@ -173,7 +173,7 @@ describe('controllers', function () {
 
       it('should return 400 with 22k_missing_schema', function (done) {
         request(server)
-          .post('/objects/gzipped/validate')
+          .post('/psc-schema-validation-service/objects/gzipped/validate')
           .attach('file', './test/api/gzip_data/NE_22k_missing_schema.json.gz')
           .expect('Content-Type', /json/)
           .expect(400)
@@ -185,7 +185,7 @@ describe('controllers', function () {
 
       it('should return 422 with 22k_invalid_schema', function (done) {
         request(server)
-          .post('/objects/gzipped/validate')
+          .post('/psc-schema-validation-service/objects/gzipped/validate')
           .attach('file', './test/api/gzip_data/NE_22k_invalid_schema.json.gz')
           .expect('Content-Type', /json/)
           .expect(422)
@@ -197,7 +197,7 @@ describe('controllers', function () {
 
       it('should return { isValid : true } with 111k', function (done) {
         request(server)
-          .post('/objects/gzipped/validate')
+          .post('/psc-schema-validation-service/objects/gzipped/validate')
           .attach('file', './test/api/gzip_data/NE_111k.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
@@ -211,7 +211,7 @@ describe('controllers', function () {
       /*it('should return { isValid : true } with 111k_complex_schema', function (done) {
         this.timeout(50000);
         request(server)
-          .post('/objects/gzipped/validate')
+          .post('/psc-schema-validation-service/objects/gzipped/validate')
           .attach('file', './test/api/gzip_data/NE_111k_complex_schema.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
