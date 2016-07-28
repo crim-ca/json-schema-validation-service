@@ -1,0 +1,120 @@
+{
+  "data": [
+    {
+      "_start": 6,
+      "_end": 9,
+      "_id": 3646673,
+      "kind": "word",
+      "length": 3,
+      "orth": "upperInitial",
+      "text": "The",
+      "category": "DT"
+    },
+    {
+      "_start": 10,
+      "_end": 17,
+      "_id": 3646675,
+      "kind": "word",
+      "length": 7,
+      "orth": "upperInitial",
+      "text": "Project",
+      "category": "NNP"
+    },
+    {
+      "_start": 18,
+      "_end": 27,
+      "_id": 3646677,
+      "kind": "word",
+      "length": 9,
+      "orth": "upperInitial",
+      "text": "Gutenberg",
+      "category": "NNP"
+    },
+    {
+      "_start": 28,
+      "_end": 33,
+      "_id": 3646679,
+      "kind": "word",
+      "length": 5,
+      "orth": "mixedCaps",
+      "text": "EBook",
+      "category": "NNP"
+    },
+    {
+      "_start": 34,
+      "_end": 36,
+      "_id": 3646681,
+      "kind": "word",
+      "length": 2,
+      "orth": "lowercase",
+      "text": "of",
+      "category": "IN"
+    },
+    {
+      "_start": 37,
+      "_end": 44,
+      "_id": 3646683,
+      "kind": "word",
+      "length": 7,
+      "orth": "upperInitial",
+      "text": "Ulysses",
+      "category": "NNP"
+    },
+    {
+      "_start": 44,
+      "_end": 45,
+      "_id": 3646684,
+      "kind": "punctuation",
+      "length": 1,
+      "text": ",",
+      "category": ","
+    },
+    {
+      "_start": 46,
+      "_end": 48,
+      "_id": 3646686,
+      "kind": "word",
+      "length": 2,
+      "orth": "lowercase",
+      "text": "by",
+      "category": "IN"
+    },
+    {
+      "_start": 49,
+      "_end": 54,
+      "_id": 3646688,
+      "kind": "word",
+      "length": 5,
+      "orth": "upperInitial",
+      "text": "James",
+      "category": "NNP"
+    },
+    {
+      "_id": 3646690,
+      "kind": "word",
+      "length": 5,
+      "orth": "upperInitial",
+      "text": "Joyce",
+      "category": "NNP"
+    },
+    {
+      "_start": 64,
+      "_end": 10,
+      "_id": 3646695,
+      "kind": "word",
+      "length": 4,
+      "orth": "upperInitial",
+      "text": "This",
+      "category": "DT"
+    },
+    {
+      "_end": 74,
+      "_id": 3646697,
+      "kind": "word",
+      "length": 5,
+      "orth": "mixedCaps",
+      "text": "eBook",
+      "category": "NN"
+    }
+  ]
+}

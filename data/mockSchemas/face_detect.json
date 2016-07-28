@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://adnotare.crim.ca/schema/custom-meta-schema#",
+  "targetType": "multimedia_document_content",
+  "title": "Face_Detect",
+  "description": "A representation of a face detection in a video media file",
+  "type": "object",
+  "required": [
+    "@context",
+    "@type",
+    "_schemaType",
+    "_corpusID",
+    "_documentID",
+    "begin",
+    "end",
+    "confidence"
+  ],
+  "properties": {
+
+    "@context": {
+      "format": "url",
+      "type": "string",
+      "description": "JSON-LD context",
+      "locked": true
+    },
+    "@type": {
+      "type": "string",
+      "description": "JSON-LD type",
+      "locked": true
+    },
+    "_schemaType": {
+      "type": "string",
+      "description": "Schema type",
+      "locked": true
+    },
+    "_corpusID": {
+      "type": "string",
+      "description": "Internal Corpus GUID",
+      "locked": true
+    },
+    "_documentID": {
+      "type": "string",
+      "description": "Internal Document GUID",
+      "locked": true
+    },
+    "begin": {
+      "format": "date-time-local",
+      "type": "string",
+      "description": "Annotation starting time",
+      "locked": true
+    },
+    "end": {
+      "format": "date-time-local",
+      "type": "string",
+      "description": "Annotation ending time",
+      "locked": true
+    },
+    "confidence": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "number",
+      "locked": true
+    },
+    "faceId": {
+      "title": "Face Id",
+      "description": "Face detection faceId",
+      "type": "string",
+      "language": "fr"
+    },
+    "poseType": {
+      "title": "Pose Type",
+      "description": "Face detection poseType [ -2: 'Low', -1: 'Left profile', 0: 'Frontal', 1: 'Right profile', 2: 'High' ]",
+      "type": "number",
+      "enum": [
+        -2, -1, 0, 1, 2
+      ],
+      "default": 0
+    }
+  }
+}

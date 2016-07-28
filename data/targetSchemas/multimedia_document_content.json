@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://adnotare.crim.ca/schema/custom-meta-schema#",
+  "targetType": "multimedia_document_content",
+  "title": "Multimedia document content",
+  "description": "Multimedia document content schema",
+  "type": "object",
+  "required": [
+    "@context",
+    "@type",
+    "_schemaType",
+    "_corpusID",
+    "_documentID",
+    "begin",
+    "end"
+  ],
+  "properties": {
+    "@context": {
+      "format": "url",
+      "type": "string",
+      "description": "JSON-LD context",
+      "locked": true
+    },
+    "@type": {
+      "type": "string",
+      "description": "JSON-LD type",
+      "locked": true
+    },
+    "_schemaType": {
+      "type": "string",
+      "description": "Schema type",
+      "locked": true
+    },
+    "_corpusID": {
+      "type": "string",
+      "description": "Internal Corpus GUID",
+      "locked": true
+    },
+    "_documentID": {
+      "type": "string",
+      "description": "Internal Document GUID",
+      "locked": true
+    },
+    "begin": {
+      "type": "number",
+      "description": "Annotation starting time in miliseconds"
+    },
+    "end": {
+      "type": "number",
+      "description": "Annotation ending time in miliseconds"
+    },
+    "confidence": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "number",
+      "description": "Confidence degree"
+    }
+  }
+}

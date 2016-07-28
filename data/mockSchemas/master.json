@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://adnotare.crim.ca/schema/custom-meta-schema#",
+  "description": "A representation of the master schema",
+  "type": "object",
+  "required": [
+    "@context",
+    "@type",
+    "_schemaType"
+  ],
+  "properties": {
+    "@context": {
+      "format": "url",
+      "type": "string",
+      "description": "JSON-LD context",
+      "locked": true
+    },
+    "@type": {
+      "type": "string",
+      "description": "JSON-LD type",
+      "locked": true
+    },
+    "_schemaType": {
+      "type": "string",
+      "description": "Schema type",
+      "locked": true
+    }
+  }
+}

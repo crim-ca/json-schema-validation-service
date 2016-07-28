@@ -1,0 +1,12 @@
+{
+  "@context" : "http://test.com",
+  "@type": "json-ld type",
+  "_schemaType": "multimedia_document_content",
+  "_corpusID": "ABCD",
+  "_documentID": "ABCD",
+  "begin": 12345,
+  "end": 123456,
+  "confidence": 15,
+  "faceId": "ABC",
+  "poseType": "DEF"
+}
