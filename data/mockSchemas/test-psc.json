@@ -34,6 +34,12 @@
       "searchMode": "keyword_ws",
       "locked": true
     },
+    "_corpusID": {
+      "type": "string",
+      "description": "Internal Corpus GUID",
+      "searchMode": "keyword_ws",
+      "locked": true
+    },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",

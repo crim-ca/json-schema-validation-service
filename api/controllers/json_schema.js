@@ -5,7 +5,14 @@ const util = require('util'),
       Config = require('../../config.json');
 
 module.exports = {
-  validateSchema: validateSchema
+  validateSchema: validateSchema,
+  //Bellow, for unit tests
+  validateMetaschema: validateMetaschema,
+  validateTargetType: validateTargetType,
+  isSupersetOfPrimitiveArray: isSupersetOfPrimitiveArray,
+  validateSubSchema : validateSubSchema,
+  validateSearchEngineConstraints: validateSearchEngineConstraints,
+  validatePscConstraints: validatePscConstraints
 };
 
 function validateSchema(req, res) {
@@ -17,12 +24,14 @@ function validateSchema(req, res) {
 }
 
 function validateMetaschema(schema) {
+  var response = true;
   let ajv = new Ajv();
   try {
     ajv.compile(schema);  // Draft v4 seems implied by the ajv //API
   } catch (error) {
-    console.log("Error validating Schema" + error)
+    console.log("Error validating Schema" + error);
   }
+  return response;
 }
 
 function isElementOneOf(element, collection) {
@@ -261,27 +270,4 @@ function validatePscConstraints(schema) {
   return validateSearchEngineConstraints(schema, targetSchema);
 }
 
-//let mySchema = require('schema-psc.json');
-//validateMetaschema(mySchema);
-//
-//let myTargetSchema = require(Config.targetSchemas.document);
-//validateTargetType(mySchema);
-//
-//// todo: move to unit tests
-//console.log("valid " + isSupersetOfPrimitiveArray([], []));
-//console.log("valid " + isSupersetOfPrimitiveArray([], ['12']));
-//console.log("valid " + isSupersetOfPrimitiveArray(['23'], ['12']));
-//console.log("valid " + isSupersetOfPrimitiveArray(['23'], []));
-//console.log("valid " + isSupersetOfPrimitiveArray(['23'], ['23']));
-//console.log("valid " + isSupersetOfPrimitiveArray(['23', '24'], ['23']));
-//
-//console.log("validateTargetType", validateTargetType(mySchema));
-//
-//console.log("validateSubSchema", validateSubSchema(mySchema, myTargetSchema));
-//
-//console.log("validateSearchEngineConstraints", validateSearchEngineConstraints(mySchema));
-//
-//
-//// Global validation function
-//console.log("validatePscConstraints", validatePscConstraints(mySchema));
 

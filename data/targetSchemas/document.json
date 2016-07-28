@@ -40,6 +40,7 @@
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
+      "searchMode": "keyword_ws",
       "locked": true
     }
   }
