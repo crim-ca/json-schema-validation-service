@@ -10,6 +10,8 @@
     "text_document_surface": "text_document_surface.json"
   },
   "typeKeyword": "type",
+  "arrayKeyword": "array",
+  "itemsKeyword": "items",
   "searchModeKeyword": "searchMode",
   "searchableKeyword" : "searchable",
   "fuzzySearchMode":"fuzzy",
@@ -19,6 +21,7 @@
     "fuzzy_with_stop",
     "fuzzy"
   ],
+  "primitiveTypes": ["integer", "number", "string", "boolean"],
   "languageKeyword": "language",
   "languages": [
     "arabic",

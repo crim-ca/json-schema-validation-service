@@ -6,7 +6,7 @@ const util = require('util'),
 
 module.exports = {
   validateSchema: validateSchema,
-  //Bellow, for unit tests
+  //Below, for unit tests
   validateMetaschema: validateMetaschema,
   validateTargetType: validateTargetType,
   isSupersetOfPrimitiveArray: isSupersetOfPrimitiveArray,
@@ -237,12 +237,12 @@ function validateSearchMode(property, searchable) {
     return true;
   }
 
-  var searchMode;
-  if (!property.hasOwnProperty(Config.searchModeKeyword)) {
-    searchMode = "fuzzy";
-  } else {
-    searchMode = property[Config.searchModeKeyword]
+  // Search mode is mandatory for searchable properties of type string
+  if(!property.hasOwnProperty(Config.searchModeKeyword)) {
+    throw new Error(`Mandatory ${Config.searchModeKeyword} keyword is missing in searchable string property: ${property}`)
   }
+
+  let searchMode = property[Config.searchModeKeyword];
   if(!isElementOneOf(searchMode, Config.searchModes)) {
     throw new Error(`Invalid search mode for property ${JSON.stringify(property)}`)
   }
@@ -250,11 +250,56 @@ function validateSearchMode(property, searchable) {
   return validateLanguage(property, searchMode)
 }
 
-// keyword, default
-// searchable, true
-// searchMode, fuzzy
-// language, (no default)
-// Note: this function will only validate the constraints on simple types and lists of simple types. We are excluding:
+function isPrimitiveType(property) {
+  return isElementOneOf(property[Config.typeKeyword], Config.primitiveTypes);
+}
+
+function isSchemaOfPrimitiveTypeList(schema) {
+  if (!schema.hasOwnProperty(Config.itemsKeyword)) {
+    return false;
+  }
+
+  let items = schema[Config.itemsKeyword];
+
+  // Items will either be a schema object for list validations, or an array of schema objects for tuple validations.
+  // In our case, we want an homogeneous array i.e. a list.
+
+  return items.constructor === Object && isPrimitiveType(items);
+}
+
+// Determine is we have an homogeneous array of primitive types (or nested arrays of primitive types.)
+function isHomogeneousArrayOfPrimitiveType(property) {
+  let type = property[Config.typeKeyword];
+
+  if (type !== Config.arrayKeyword) {
+    return false;
+  }
+
+  if (isSchemaOfPrimitiveTypeList(property)) {
+    return true;
+  }
+
+  if (!property.hasOwnProperty(Config.itemsKeyword) ) {
+    return false;
+  }
+
+  // Items will either be a (schema) object for list validations, or an array of (schema) objects for tuple validations.
+  // In our case, we want an homogeneous array i.e. a list and thus, the schema needs to be an object.
+  let items = property[Config.itemsKeyword];
+  if (items.constructor !== Object) {
+    return false;
+  }
+
+  let itemsType = items[Config.typeKeyword];
+  if (itemsType !== Config.arrayKeyword) {
+    return false;
+  }
+
+  return isHomogeneousArrayOfPrimitiveType(items)
+}
+
+
+// Note: this function will only validate the constraints on simple types and nested lists of simple types. We are excluding:
 // -Object types ({ "type": "object" })
 // -Union types (E.G: { "type": ["number", "string"] })
 // -Lists of objects
@@ -262,8 +307,22 @@ function validateSearchMode(property, searchable) {
 function validateSearchable(property) {
   validateBooleanKeyword(property, Config.searchableKeyword);
 
-  // Searchable is true by default
-  let searchable = !property.hasOwnProperty(Config.searchableKeyword) || property[Config.searchableKeyword] === true;
+  // Searchable is mandatory
+  if(!property.hasOwnProperty(Config.searchableKeyword)) {
+    throw new Error(`Mandatory ${Config.searchableKeyword} keyword is missing in property: ${property}`)
+  }
+
+  let searchable = property[Config.searchableKeyword];
+  if (searchable) {
+    if (!property.hasOwnProperty(Config.typeKeyword)) {
+      throw new Error(`Searchable property is missing mandatory type ${property}`)
+    }
+    if(!isPrimitiveType(property) && !isHomogeneousArrayOfPrimitiveType(property)) {
+      throw new Error(`Searchable property must be of primitive type or an homogeneous array of primitive types.
+ -Property: ${JSON.stringify(property)}`)
+    }
+  }
+
   return validateSearchMode(property, searchable)
 }
 
