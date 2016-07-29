@@ -28,12 +28,14 @@
     "_schemaType": {
       "type": "string",
       "description": "Schema type",
+      "searchable": true,
       "searchMode": "keyword_ws",
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
+      "searchable": true,
       "searchMode": "keyword_ws",
       "locked": true
     }

@@ -25,29 +25,28 @@
     "_schemaType": {
       "type": "string",
       "description": "Schema type",
-      "searchMode": "keyword_ws",
-      "locked": true
-    },
-    "_bucketID": {
-      "type": "string",
-      "description": "Internal Bucket GUID",
-      "searchMode": "keyword_ws",
-      "locked": true
-    },
-    "_corpusID": {
-      "type": "string",
-      "description": "Internal Corpus GUID",
+      "searchable": true,
       "searchMode": "keyword_ws",
       "locked": true
     },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",
-      "searchMode": "keyword_ws"
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": true
+    },
+    "_corpusID": {
+      "type": "string",
+      "description": "Internal Corpus GUID",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": true
     },
     "iWantLess": {
       "type": "string",
       "description": "You sing this less corrosion to me",
+      "searchable": true,
       "searchMode": "fuzzy_with_stop"
     },
     "iWantNone": {
@@ -59,7 +58,8 @@
       "language": "greek",
       "type": "string",
       "description": "You sing this moar corrosion to me",
-      "searchable": true
+      "searchable": true,
+      "searchMode": "fuzzy_with_stop"
     }
   }
 }

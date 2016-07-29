@@ -31,10 +31,7 @@
     },
     "_schemaType": {
       "type": "string",
-      "description": "Schema type",
-      "searchable": true,
-      "searchMode": "keyword_ws",
-      "locked": true
+      "description": "Schema type"
     },
     "_documentID": {
       "type": "string",
@@ -77,8 +74,7 @@
       "title": "Face Id",
       "description": "Face detection faceId",
       "type": "string",
-      "language": "fr",
-      "searchable": false
+      "language": "fr"
     },
     "poseType": {
       "title": "Pose Type",
@@ -87,7 +83,6 @@
       "enum": [
         -2, -1, 0, 1, 2
       ],
-      "searchable": false,
       "default": 0
     }
   }
