@@ -2,9 +2,16 @@ var should = require('should');
 var request = require('supertest');
 var server = require('../../../app');
 
-var mockSchemas = require('../mock_data/mock_schemas');
-var targetSchemas = require('../mock_data/target_schemas');
-var mockObjects = require('../mock_data/mock_objects');
+const masterSchema = require('../../../data/mockSchemas/master.json');
+const multimediaDocumentContentSchema = require('../../../data/targetSchemas/multimedia_document_content.json');
+const faceDetectValidObject = require('../../../data/mockObjects/face_detect_valid.json');
+const faceDetectNotValidObject = require('../../../data/mockObjects/face_detect_invalid.json');
+const textDocumentSurfaceSchema = require('../../../data/targetSchemas/text_document_surface.json');
+const tokenValidObject = require('../../../data/mockObjects/token_valid.json');
+const tokenNotValidObject = require('../../../data/mockObjects/token_invalid.json');
+const basicSchema = require('../../../data/batch/schemas/basic.json');
+const NE10ValidObjects = require('../../../data/batch/objects/NE_10_objects.json');
+const NE10NotValidObjects = require('../../../data/batch/objects/NE_10_objects_with_errors.json');
 
 //BATCH ARRAY VALIDATION:
 // 1- We can't send large object with supertest at this point (POST objects/validate is for small arrays)
@@ -22,11 +29,6 @@ var mockObjects = require('../mock_data/mock_objects');
 //    FALSE <= $ curl -F "file=@NE_111k_with_errors.json.gz" http:10.30.90.174:9000/objects/gzipped/validate
 //    But now supertest method attach() support attached files with multipart/form-data so curl are kinda useless
 
-var objects22k = [{"_start": 123}, {"_start": 12223}];
-var basic = {
-  "required": [ "_start"]
-};
-
 describe('controllers', function () {
 
   describe('json_object', function () {
@@ -42,7 +44,6 @@ describe('controllers', function () {
           .expect(400)
           .end(function (err, res) {
             should.not.exist(err);
-            //res.status.should.eql(400);
             done();
           });
       });
@@ -81,7 +82,7 @@ describe('controllers', function () {
 
         request(server)
           .post('/psc-schema-validation-service/object/validate')
-          .send({schema: targetSchemas.master, object: mockObjects.faceValid})
+          .send({schema: masterSchema, object: faceDetectValidObject})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(200)
@@ -96,7 +97,7 @@ describe('controllers', function () {
 
         request(server)
           .post('/psc-schema-validation-service/object/validate')
-          .send({schema: targetSchemas.multimedia_document_content, object: mockObjects.faceValid})
+          .send({schema: multimediaDocumentContentSchema, object: faceDetectValidObject})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(200)
@@ -107,11 +108,59 @@ describe('controllers', function () {
           });
       });
 
-      it('should return { isValid: false, errors: [] } with multimedia_document_content schema and invalid faceDetect object', function (done) {
+      it('should return { isValid: false, errors: [] } with multimedia_document_content schema and an invalid faceDetect object', function (done) {
 
         request(server)
           .post('/psc-schema-validation-service/object/validate')
-          .send({schema: targetSchemas.multimedia_document_content, object: { yolo : 123}})
+          .send({schema: multimediaDocumentContentSchema, object: faceDetectNotValidObject})
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            //TODO fix
+            should.not.exist(err);
+            should.exist(res.body.isValid);
+            should.exist(res.body.errors);
+            res.body.isValid.should.eql(false);
+            done();
+          });
+      });
+
+      it('should accept master schema and a valid token object', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/object/validate')
+          .send({schema: masterSchema, object: tokenValidObject})
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.should.eql({ isValid: true });
+            done();
+          });
+      });
+
+      it('should accept text_document_surface schema and a valid token object', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/object/validate')
+          .send({schema: textDocumentSurfaceSchema, object: tokenValidObject})
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.should.eql({ isValid: true });
+            done();
+          });
+      });
+
+      it('should return { isValid: false, errors: [] } with text_document_surface schema and an invalid token object', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/object/validate')
+          .send({schema: textDocumentSurfaceSchema, object: tokenNotValidObject})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(200)
@@ -129,26 +178,11 @@ describe('controllers', function () {
 
     describe('POST /objects/validate', function () {
 
-      it('should return { isValid : true } with objects22k', function (done) {
+      it('should return { isValid : true } with NE10ValidObjects.data', function (done) {
         request(server)
           .post('/psc-schema-validation-service/objects/validate')
-          .send({schema: basic, objects: objects22k})
+          .send({schema: basicSchema, objects: NE10ValidObjects.data})
           .set('Accept', 'application/json')
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .end(function (err, res) {
-            should.not.exist(err);
-            done();
-          });
-      });
-    });
-
-    describe('POST /objects/gzipped/validate', function () {
-
-      it('should return { isValid : true } with 22k', function (done) {
-        request(server)
-          .post('/psc-schema-validation-service/objects/gzipped/validate')
-          .attach('file', './test/api/gzip_data/NE_22k.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
           .end(function (err, res) {
@@ -158,10 +192,40 @@ describe('controllers', function () {
           });
       });
 
-      it('should return { isValid : false } with 22k_with_errors', function (done) {
+      it('should return { isValid : false } with NE10NotValidObjects.data', function (done) {
+        request(server)
+          .post('/psc-schema-validation-service/objects/validate')
+          .send({schema: basicSchema, objects: NE10NotValidObjects.data})
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.isValid.should.eql(false);
+            done();
+          });
+      });
+    });
+
+    describe('POST /objects/gzipped/validate', function () {
+
+      it('should return { isValid : true } with NE_22k', function (done) {
         request(server)
           .post('/psc-schema-validation-service/objects/gzipped/validate')
-          .attach('file', './test/api/gzip_data/NE_22k_with_error.json.gz')
+          .attach('file', './data/batch/gzipped/NE_22k.json.gz')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.isValid.should.eql(true);
+            done();
+          });
+      });
+
+      it('should return { isValid : false } with NE_22k_with_errors', function (done) {
+        request(server)
+          .post('/psc-schema-validation-service/objects/gzipped/validate')
+          .attach('file', './data/batch/gzipped/NE_22k_with_error.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
           .end(function (err, res) {
@@ -171,10 +235,10 @@ describe('controllers', function () {
           });
       });
 
-      it('should return 400 with 22k_missing_schema', function (done) {
+      it('should return 400 with NE_22k_missing_schema', function (done) {
         request(server)
           .post('/psc-schema-validation-service/objects/gzipped/validate')
-          .attach('file', './test/api/gzip_data/NE_22k_missing_schema.json.gz')
+          .attach('file', './data/batch/gzipped/NE_22k_missing_schema.json.gz')
           .expect('Content-Type', /json/)
           .expect(400)
           .end(function (err, res) {
@@ -183,10 +247,10 @@ describe('controllers', function () {
           });
       });
 
-      it('should return 422 with 22k_invalid_schema', function (done) {
+      it('should return 422 with NE_22k_invalid_schema', function (done) {
         request(server)
           .post('/psc-schema-validation-service/objects/gzipped/validate')
-          .attach('file', './test/api/gzip_data/NE_22k_invalid_schema.json.gz')
+          .attach('file', './data/batch/gzipped/NE_22k_invalid_schema.json.gz')
           .expect('Content-Type', /json/)
           .expect(422)
           .end(function (err, res) {
@@ -195,10 +259,10 @@ describe('controllers', function () {
           });
       });
 
-      it('should return { isValid : true } with 111k', function (done) {
+      it('should return { isValid : true } with NE_111k', function (done) {
         request(server)
           .post('/psc-schema-validation-service/objects/gzipped/validate')
-          .attach('file', './test/api/gzip_data/NE_111k.json.gz')
+          .attach('file', './data/batch/gzipped/NE_111k.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
           .end(function (err, res) {
@@ -212,7 +276,7 @@ describe('controllers', function () {
         this.timeout(50000);
         request(server)
           .post('/psc-schema-validation-service/objects/gzipped/validate')
-          .attach('file', './test/api/gzip_data/NE_111k_complex_schema.json.gz')
+          .attach('file', './data/batch/gzipped/NE_111k_complex_schema.json.gz')
           .expect('Content-Type', /json/)
           .expect(200)
           .end(function (err, res) {

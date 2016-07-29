@@ -1,0 +1,7 @@
+{
+  "start": 99999,
+  "begin": 12345,
+  "confidence": "this_should_not_be_a_string",
+  "faceId": "this is a valid string tho",
+  "poseType": 22
+}

@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.1"
+  version: "0.0.2"
   title: Schema validation service
 
 # basePath prefixes all resource paths 
@@ -16,10 +16,21 @@ consumes:
 # format of the responses to the client (Accepts)
 produces:
   - application/json
+tags:
+  -
+    name: Schema
+    description: Schema Validation API
+  -
+    name: Object
+    description: Object Validation API
 paths:
   /object/validate:
+    #tags:
+    #  - Object
     x-swagger-router-controller: json_object
     post:
+      tags:
+        - Object
       description: Validate input object by its json schema
       # used as the method name of the controller
       operationId: validateObject
@@ -54,6 +65,8 @@ paths:
   /objects/validate:
       x-swagger-router-controller: json_object
       post:
+        tags:
+          - Object
         description: Validate input objects by its json schema
         # used as the method name of the controller
         operationId: validateArray
@@ -90,6 +103,8 @@ paths:
   /objects/gzipped/validate:
     x-swagger-router-controller: json_object
     post:
+      tags:
+        - Object
       consumes:
         - multipart/form-data
         #- application/x-gzip
@@ -120,9 +135,11 @@ paths:
   /schema/validate:
     x-swagger-router-controller: json_schema
     post:
+      tags:
+        - Schema
       description: Validate input schema
       # used as the method name of the controller
-      operationId: validateArray
+      operationId: validateSchema
       parameters:
         - name: body
           in: body

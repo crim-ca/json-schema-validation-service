@@ -1,0 +1,16 @@
+{
+  "@context" : "http://test.com",
+  "@type": "json-ld type",
+  "_schemaType": "text_document_surface",
+  "_corpusID": "ABCD",
+  "_documentID": "ABCD",
+  "offsets": [ [729, 736] ],
+  "category": "NNP",
+  "kind": "word",
+  "length": 7,
+  "orth": "upperInitial",
+  "string": "English",
+  "lemma": "english",
+  "gender": "M",
+  "number": "S"
+}

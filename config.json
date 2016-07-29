@@ -1,0 +1,58 @@
+{
+  "targetTypes": [
+    "corpus",
+    "document",
+    "text_document_surface"
+  ],
+  "targetSchemas": {
+    "corpus": "corpus.json",
+    "document": "document.json",
+    "text_document_surface": "text_document_surface.json"
+  },
+  "typeKeyword": "type",
+  "searchModeKeyword": "searchMode",
+  "searchableKeyword" : "searchable",
+  "fuzzySearchMode":"fuzzy",
+  "searchModes": [
+    "keyword_ws",
+    "keyword_custom",
+    "fuzzy_with_stop",
+    "fuzzy"
+  ],
+  "languageKeyword": "language",
+  "languages": [
+    "arabic",
+    "armenian",
+    "basque",
+    "brazilian",
+    "bulgarian",
+    "catalan",
+    "cjk",
+    "czech",
+    "danish",
+    "dutch",
+    "english",
+    "finnish",
+    "french",
+    "galician",
+    "german",
+    "greek",
+    "hindi",
+    "hungarian",
+    "indonesian",
+    "irish",
+    "italian",
+    "latvian",
+    "lithuanian",
+    "norwegian",
+    "persian",
+    "portuguese",
+    "romanian",
+    "russian",
+    "sorani",
+    "spanish",
+    "swedish",
+    "turkish",
+    "thai"
+  ]
+}
