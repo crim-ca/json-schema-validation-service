@@ -16,21 +16,25 @@
       "format": "url",
       "type": "string",
       "description": "JSON-LD context",
+      "searchable": false,
       "locked": true
     },
     "@type": {
       "type": "string",
       "description": "JSON-LD type",
+      "searchable": false,
       "locked": true
     },
     "_schemaType": {
       "type": "string",
       "description": "Schema type",
+      "searchMode": "keyword_ws",
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
+      "searchMode": "keyword_ws",
       "locked": true
     }
   }

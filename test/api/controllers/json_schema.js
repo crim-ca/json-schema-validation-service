@@ -5,7 +5,12 @@ const server = require('../../../app');
 const Config = require('../../../config.json');
 const schemaController = require('../../../api/controllers/json_schema');
 const pscSchema = require('../../../data/mockSchemas/test-psc.json');
-const documentSchema = require('../../../data/targetSchemas/document.json'); // += Config.targetSchemas.document
+const documentSchema = require('../../../data/targetSchemas/document.json');
+const corpusSchema = require('../../../data/targetSchemas/corpus.json');
+const textDocumentSurfaceSchema = require('../../../data/targetSchemas/text_document_surface.json');
+const multimediaDocumentContentSchema = require('../../../data/targetSchemas/multimedia_document_content.json');
+const faceDetectSchema = require('../../../data/mockSchemas/face_detect.json');
+const tokenSchema = require('../../../data/mockSchemas/token.json');
 
 
 describe('controllers', function () {
@@ -70,19 +75,6 @@ describe('controllers', function () {
         resp.should.eql(true);
       });
 
-      //
-      //console.log("validateTargetType", validateTargetType(mySchema));
-      //
-      //console.log("validateSubSchema", validateSubSchema(mySchema, myTargetSchema));
-      //
-      //console.log("validateSearchEngineConstraints", validateSearchEngineConstraints(mySchema));
-      //
-      //
-      //// Global validation function
-      //console.log("validatePscConstraints", validatePscConstraints(mySchema));
-
-
-
     });
 
     describe('POST /schema/validate', function () {
@@ -90,7 +82,7 @@ describe('controllers', function () {
       it('should return an error 400 if body is missing', function (done) {
 
         request(server)
-          .post('/psc-schema-validation-service/object/validate')
+          .post('/psc-schema-validation-service/schema/validate')
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(400)
@@ -103,7 +95,7 @@ describe('controllers', function () {
       it('should return an error 400 if schema is missing from body', function (done) {
 
         request(server)
-          .post('/psc-schema-validation-service/object/validate')
+          .post('/psc-schema-validation-service/schema/validate')
           .send({})
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
@@ -113,6 +105,111 @@ describe('controllers', function () {
             done();
           });
       });
+
+      it('should return { isValid : true } if schema is psc-test schema', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/schema/validate')
+          .send({ schema: pscSchema })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.should.eql({ isValid: true });
+            done();
+          });
+      });
+
+      it('should return { isValid : true } if schema is document schema', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/schema/validate')
+          .send({ schema: documentSchema })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.should.eql({ isValid: true });
+            done();
+          });
+      });
+
+      it('should return { isValid : true } if schema is corpus schema', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/schema/validate')
+          .send({ schema: corpusSchema })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.should.eql({ isValid: true });
+            done();
+          });
+      });
+
+      it('should return { isValid : true } if schema is text_document_surface schema', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/schema/validate')
+          .send({ schema: textDocumentSurfaceSchema })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.should.eql({ isValid: true });
+            done();
+          });
+      });
+
+      /*it('should return { isValid : true } if schema is face_detect schema', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/schema/validate')
+          .send({ schema: faceDetectSchema })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.should.eql({ isValid: true });
+            done();
+          });
+      });
+
+      it('should return { isValid : true } if schema is face_detect schema', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/schema/validate')
+          .send({ schema: faceDetectSchema })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.should.eql({ isValid: true });
+            done();
+          });
+      });
+
+      it('should return { isValid : true } if schema is token schema', function (done) {
+
+        request(server)
+          .post('/psc-schema-validation-service/schema/validate')
+          .send({ schema: tokenSchema })
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            res.body.should.eql({ isValid: true });
+            done();
+          });
+      });*/
 
     });
 

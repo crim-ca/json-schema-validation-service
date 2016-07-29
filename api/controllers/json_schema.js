@@ -16,11 +16,53 @@ module.exports = {
 };
 
 function validateSchema(req, res) {
-  var response = validatePscConstraints(req.swagger.params.body.originalValue.schema);
-  res.status(200);
-  res.json({
-    isValid: response
-  });
+  const schema = req.swagger.params.body.originalValue.schema;
+  let ajv = new Ajv();
+  let validate;
+
+  try {
+    validate = ajv.compile(schema);  // Draft v4 seems implied by the ajv //API
+    executeValidation(req.swagger.params.body.originalValue.schema, function(response, errors){
+      if(response){
+        res.status(200);
+        res.json({
+          isValid: true
+        });
+      }else{
+        console.log(errors.length);
+        res.status(200);
+        res.json({
+          isValid: false,
+          errors: errors
+        });
+      }
+    });
+
+  } catch (error) {
+    res.status(422);
+    res.json({
+      "message": "Ajv " + error,
+      "code": "AJV_SCHEMA_VALIDATION_FAILED",
+      "failedValidation": true
+    });
+  }
+
+}
+
+function executeValidation(schema, callback){
+  var response = true;
+  var errors = [];
+
+  try {
+    response = validatePscConstraints(schema);
+  } catch (error) {
+    response = false;
+    errors.push({
+      message: "PSC " + error,
+      code: "PSC_SCHEMA_VALIDATION"
+    });
+  }
+  callback(response, errors);
 }
 
 function validateMetaschema(schema) {
@@ -172,7 +214,7 @@ function validateLanguage(property, searchMode) {
   }
 
   if (searchMode === Config.fuzzySearchMode && !property.hasOwnProperty(Config.languageKeyword)) {
-    throw new Error(`Missing mandatory language for property ${JSON.stringify(property)}`)
+    throw new Error(`Missing mandatory searchMode for property ${JSON.stringify(property)}`)
   }
 
   let language = property[Config.languageKeyword];
@@ -254,16 +296,17 @@ function validateSearchEngineConstraints(schema) {
 }
 
 function validatePscConstraints(schema) {
-  validateMetaschema(schema);
 
   if (!validateTargetType(schema)) {
+    throw new Error(`Invalid property targetType: ${JSON.stringify(schema.targetType)}`);
     return false;
   }
 
   let targetType = schema.targetType;
-  let targetSchema = Config.targetSchemas[targetType];
+  let targetSchema = require("../../data/targetSchemas/" + Config.targetSchemas[targetType]);
 
   if (!validateSubSchema(schema, targetSchema)) {
+    throw new Error(`Invalid schema based on target schema: ${JSON.stringify(targetSchema)}`);
     return false;
   }
 
