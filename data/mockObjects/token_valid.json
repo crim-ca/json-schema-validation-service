@@ -1,7 +1,7 @@
 {
   "@context" : "http://test.com",
   "@type": "json-ld type",
-  "_schemaType": "text_document_surface",
+  "_schemaType": "document_surface1d",
   "_corpusID": "ABCD",
   "_documentID": "ABCD",
   "offsets": [ [729, 736] ],

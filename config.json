@@ -2,12 +2,12 @@
   "targetTypes": [
     "corpus",
     "document",
-    "text_document_surface"
+    "document_surface1d"
   ],
   "targetSchemas": {
     "corpus": "corpus.json",
     "document": "document.json",
-    "text_document_surface": "text_document_surface.json"
+    "text_document_surface": "document_surface1d.json"
   },
   "typeKeyword": "type",
   "arrayKeyword": "array",
