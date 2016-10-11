@@ -3,7 +3,7 @@
   "required": [
     "@context",
     "@type",
-    "_schemaType",
+    "schemaType",
     "_bucketID",
     "_corpusID",
     "_documentID"
@@ -22,7 +22,7 @@
       "searchable": false,
       "locked": true
     },
-    "_schemaType": {
+    "schemaType": {
       "type": "string",
       "description": "Schema type",
       "searchable": true,

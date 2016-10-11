@@ -4,13 +4,13 @@
   "schemaType": "document_surface1d",
   "type": "object",
   "required": [
-    "_schemaType",
+    "schemaType",
     "_corpusID",
     "_documentID",
     "offsets"
   ],
   "properties": {
-    "_schemaType": {
+    "schemaType": {
       "type": "string",
       "description": "Schema type",
       "searchable": true,

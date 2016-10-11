@@ -4,11 +4,11 @@
   "schemaType": "corpus",
   "type": "object",
   "required": [
-    "_schemaType",
+    "schemaType",
     "_corpusID"
   ],
   "properties": {
-    "_schemaType": {
+    "schemaType": {
       "type": "string",
       "description": "Schema type",
       "searchable": true,
