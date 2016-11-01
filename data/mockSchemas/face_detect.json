@@ -1,7 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "http://adnotare.crim.ca/schema/custom-meta-schema#",
-  "targetType": "multimedia_document_content",
+  "targetType": "document",
+  "schemaType": "Face_Detect",
   "title": "Face_Detect",
   "description": "A representation of a face detection in a video media file",
   "type": "object",

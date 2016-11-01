@@ -7,7 +7,7 @@
   "targetSchemas": {
     "corpus": "corpus.json",
     "document": "document.json",
-    "text_document_surface": "document_surface1d.json"
+    "document_surface1d": "document_surface1d.json"
   },
   "typeKeyword": "type",
   "arrayKeyword": "array",

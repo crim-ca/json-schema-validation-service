@@ -1,10 +1,10 @@
 {
   "@context" : "http://test.com",
   "@type": "json-ld type",
-  "_schemaType": "document_surface1d",
+  "schemaType": "document_surface1d",
   "_corpusID": "ABCD",
   "_documentID": "ABCD",
-  "offsets": [ [729, 736] ],
+  "offsets": [ {"begin": 729, "end": 736} ],
   "category": "NNP",
   "kind": "word",
   "length": 7,
