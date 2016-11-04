@@ -12,7 +12,8 @@ module.exports = {
   isSupersetOfPrimitiveArray: isSupersetOfPrimitiveArray,
   validateSubSchema : validateSubSchema,
   validateSearchEngineConstraints: validateSearchEngineConstraints,
-  validatePscConstraints: validatePscConstraints
+  validatePscConstraints: validatePscConstraints,
+  isSchemaOfSimpleList: isSchemaOfSimpleList
 };
 
 function validateSchema(req, res) {
@@ -21,7 +22,7 @@ function validateSchema(req, res) {
   let validate;
 
   try {
-    validate = ajv.compile(schema);  // Draft v4 seems implied by the ajv //API
+    ajv.compile(schema);  // Draft v4 seems implied by the ajv //API
     executeValidation(req.swagger.params.body.originalValue.schema, function(response, errors){
       if(response){
         res.status(200);
@@ -254,56 +255,57 @@ function isPrimitiveType(property) {
   return isElementOneOf(property[Config.typeKeyword], Config.primitiveTypes);
 }
 
-function isSchemaOfPrimitiveTypeList(schema) {
-  if (!schema.hasOwnProperty(Config.itemsKeyword)) {
-    return false;
-  }
-
-  let items = schema[Config.itemsKeyword];
-
-  // Items will either be a schema object for list validations, or an array of schema objects for tuple validations.
-  // In our case, we want an homogeneous array i.e. a list.
-
-  return items.constructor === Object && isPrimitiveType(items);
-}
-
-// Determine is we have an homogeneous array of primitive types (or nested arrays of primitive types.)
-function isHomogeneousArrayOfPrimitiveType(property) {
-  let type = property[Config.typeKeyword];
+// Determine if we have an homogeneous array of simple types (primitive types or flat object)
+function isSchemaOfSimpleList(propertySchema) {
+  let type = propertySchema[Config.typeKeyword];
 
   if (type !== Config.arrayKeyword) {
     return false;
   }
 
-  if (isSchemaOfPrimitiveTypeList(property)) {
-    return true;
-  }
-
-  if (!property.hasOwnProperty(Config.itemsKeyword) ) {
+  if (!propertySchema.hasOwnProperty(Config.itemsKeyword)) {
     return false;
   }
 
-  // Items will either be a (schema) object for list validations, or an array of (schema) objects for tuple validations.
-  // In our case, we want an homogeneous array i.e. a list and thus, the schema needs to be an object.
-  let items = property[Config.itemsKeyword];
-  if (items.constructor !== Object) {
-    return false;
-  }
+  let itemsSchema = propertySchema[Config.itemsKeyword];
 
-  let itemsType = items[Config.typeKeyword];
-  if (itemsType !== Config.arrayKeyword) {
-    return false;
-  }
-
-  return isHomogeneousArrayOfPrimitiveType(items)
+  // Items will either be a schema object for list validations, or an array of schema objects for tuple validations.
+  // In our case, we want an homogeneous list, so the schema must be an object
+  return itemsSchema.constructor === Object && (isPrimitiveType(itemsSchema) || isSchemaOfFlatObject(itemsSchema));
 }
 
+function isSchemaOfFlatObject(schema) {
+  // The schema must be an object
+  let type = schema[Config.typeKeyword];
+  if (type !== Config.objectKeyword) {
+    return false;
+  }
 
-// Note: this function will only validate the constraints on simple types and nested lists of simple types. We are excluding:
+  // It must contains the properties field
+  if (!schema.hasOwnProperty(Config.propertiesKeyword)) {
+    return false
+  }
+
+  // Each property must be of primitive type (no lists or nested objects allowed)
+  for (var propertyKey in schema.properties) {
+      let property = schema.properties[propertyKey];
+      if (!property.hasOwnProperty(Config.typeKeyword) || !isPrimitiveType(property)) {
+        return false;
+      }
+  }
+
+  return true
+}
+
+// Note: this function will only validate the constraints on simple types and lists of simple types or flat objects.
+//
+// We are excluding:
 // -Object types ({ "type": "object" })
 // -Union types (E.G: { "type": ["number", "string"] })
-// -Lists of objects
+// -Lists of objects of more than one level
 // -Tuples of any kind
+//
+// A flat object is an object made of only simple types; no lists, no objects inside the object.
 function validateSearchable(property) {
   validateBooleanKeyword(property, Config.searchableKeyword);
 
@@ -317,8 +319,8 @@ function validateSearchable(property) {
     if (!property.hasOwnProperty(Config.typeKeyword)) {
       throw new Error(`Searchable property is missing mandatory type ${property}`)
     }
-    if(!isPrimitiveType(property) && !isHomogeneousArrayOfPrimitiveType(property)) {
-      throw new Error(`Searchable property must be of primitive type or an homogeneous array of primitive types.
+    if(!isPrimitiveType(property) && !isSchemaOfSimpleList(property)) {
+      throw new Error(`Searchable property must be of primitive type or an homogeneous array of primitive types (or flat objects).
  -Property: ${JSON.stringify(property)}`)
     }
   }
@@ -371,5 +373,3 @@ function validatePscConstraints(schema) {
 
   return validateSearchEngineConstraints(schema, targetSchema);
 }
-
-

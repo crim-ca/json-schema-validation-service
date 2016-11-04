@@ -9,9 +9,11 @@
     "document": "document.json",
     "document_surface1d": "document_surface1d.json"
   },
+  "objectKeyword": "object",
   "typeKeyword": "type",
   "arrayKeyword": "array",
   "itemsKeyword": "items",
+  "propertiesKeyword": "properties",
   "searchModeKeyword": "searchMode",
   "searchableKeyword" : "searchable",
   "fuzzySearchMode":"fuzzy",
