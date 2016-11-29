@@ -1,32 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "http://adnotare.crim.ca/schema/custom-meta-schema#",
   "targetType": "document",
-  "title": "Document",
-  "description": "Document target schema",
+  "schemaType": "document",
   "type": "object",
   "required": [
-    "@context",
-    "@type",
-    "_schemaType",
+    "schemaType",
     "_documentID",
     "_corpusID"
   ],
   "properties": {
-    "@context": {
-      "format": "url",
-      "type": "string",
-      "description": "JSON-LD context",
-      "searchable": false,
-      "locked": true
-    },
-    "@type": {
-      "type": "string",
-      "description": "JSON-LD type",
-      "searchable": false,
-      "locked": true
-    },
-    "_schemaType": {
+    "schemaType": {
       "type": "string",
       "description": "Schema type",
       "searchable": true,

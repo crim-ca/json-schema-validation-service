@@ -8,7 +8,7 @@
   "required": [
     "@context",
     "@type",
-    "_schemaType",
+    "schemaType",
     "_corpusID",
     "_documentID",
     "begin",
@@ -29,7 +29,7 @@
       "searchable": false,
       "locked": true
     },
-    "_schemaType": {
+    "schemaType": {
       "type": "string",
       "description": "Schema type"
     },

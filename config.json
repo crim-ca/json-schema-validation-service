@@ -2,16 +2,18 @@
   "targetTypes": [
     "corpus",
     "document",
-    "text_document_surface"
+    "document_surface1d"
   ],
   "targetSchemas": {
     "corpus": "corpus.json",
     "document": "document.json",
-    "text_document_surface": "text_document_surface.json"
+    "document_surface1d": "document_surface1d.json"
   },
+  "objectKeyword": "object",
   "typeKeyword": "type",
   "arrayKeyword": "array",
   "itemsKeyword": "items",
+  "propertiesKeyword": "properties",
   "searchModeKeyword": "searchMode",
   "searchableKeyword" : "searchable",
   "fuzzySearchMode":"fuzzy",

@@ -3,12 +3,12 @@
   "id": "Token_EN",
   "title": "Token_EN",
   "type": "object",
-  "targetType": "text_document_surface",
+  "targetType": "document_surface1d",
   "description": "PACTE Tokenizer example",
   "required": [
     "@context",
     "@type",
-    "_schemaType",
+    "schemaType",
     "_corpusID",
     "_documentID",
     "offsets",
@@ -30,7 +30,7 @@
       "searchable": false,
       "locked": true
     },
-    "_schemaType": {
+    "schemaType": {
       "type": "string",
       "description": "Schema type",
       "searchable": true,

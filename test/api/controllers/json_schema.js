@@ -2,14 +2,11 @@ const should = require('should');
 const request = require('supertest');
 const chai = require('chai');
 const server = require('../../../app');
-const Config = require('../../../config.json');
 const schemaController = require('../../../api/controllers/json_schema');
 const pscSchema = require('../../../data/mockSchemas/test-psc.json');
 const documentSchema = require('../../../data/targetSchemas/document.json');
 const corpusSchema = require('../../../data/targetSchemas/corpus.json');
-const textDocumentSurfaceSchema = require('../../../data/targetSchemas/text_document_surface.json');
-const multimediaDocumentContentSchema = require('../../../data/targetSchemas/multimedia_document_content.json');
-const faceDetectSchema = require('../../../data/mockSchemas/face_detect.json');
+const textDocumentSurfaceSchema = require('../../../data/targetSchemas/document_surface1d.json');
 const faceDetectNotValidSchema = require('../../../data/mockSchemas/face_detect_invalid.json');
 const tokenSchema = require('../../../data/mockSchemas/token.json');
 const tokenNotValidSchema = require('../../../data/mockSchemas/token_invalid.json');
@@ -75,6 +72,75 @@ describe('controllers', function () {
       it('should return true isSupersetOfPrimitiveArray with (["23", "24"], ["23"])', function () {
         const resp = schemaController.isSupersetOfPrimitiveArray(["23", "24"], ["23"]);
         resp.should.eql(true);
+      });
+
+      it('should return true isSchemaOfSimpleList with list of integer', function () {
+        let primitiveListSchema = {
+            "type": "array",
+            "items": { "type": "integer" }
+        }
+        const resp = schemaController.isSchemaOfSimpleList(primitiveListSchema)
+        resp.should.eql(true);
+      });
+
+      it('should return true isSchemaOfSimpleList with list of flat objects', function () {
+        let surface1dOffsetsSchema = {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "begin": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+        const resp = schemaController.isSchemaOfSimpleList(surface1dOffsetsSchema)
+        resp.should.eql(true);
+      });
+
+      it('should return false isSchemaOfSimpleList with list of nested objects', function () {
+        let surface1dOffsetsSchema = {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "offsets": {
+                "type": "object",
+                "properties": {
+                  "begin": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+        const resp = schemaController.isSchemaOfSimpleList(surface1dOffsetsSchema)
+        resp.should.eql(false);
+      });
+
+      it('should return false isSchemaOfSimpleList with nested lists', function () {
+        let surface1dOffsetsSchema = {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "integer" }
+          }
+        }
+        const resp = schemaController.isSchemaOfSimpleList(surface1dOffsetsSchema)
+        resp.should.eql(false);
       });
 
     });
@@ -167,7 +233,7 @@ describe('controllers', function () {
           });
       });
 
-      it('should return { isValid : true } if schema is text_document_surface schema', function (done) {
+      it('should return { isValid : true } if schema is document_surface1d schema', function (done) {
 
         request(server)
           .post('/psc-schema-validation-service/schema/validate')
@@ -178,23 +244,6 @@ describe('controllers', function () {
           .end(function (err, res) {
             should.not.exist(err);
             res.body.should.eql({ isValid: true });
-            done();
-          });
-      });
-
-      it('should return { isValid : false } if schema is face_detect schema (2016-07-29 multimedia_document_content is not part of targetType enum', function (done) {
-
-        request(server)
-          .post('/psc-schema-validation-service/schema/validate')
-          .send({ schema: faceDetectSchema })
-          .set('Accept', 'application/json')
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .end(function (err, res) {
-            should.not.exist(err);
-            //res.body.should.eql({ isValid: true });
-            should.exist(res.body.isValid);
-            res.body.isValid.should.eql(false);
             done();
           });
       });

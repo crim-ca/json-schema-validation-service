@@ -1,7 +1,7 @@
 {
   "@context" : "http://test.com",
   "@type": "json-ld type",
-  "_schemaType": "multimedia_document_content",
+  "schemaType": "multimedia_document_content",
   "_corpusID": "ABCD",
   "_documentID": "ABCD",
   "begin": 12345,

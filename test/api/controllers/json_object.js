@@ -3,10 +3,9 @@ var request = require('supertest');
 var server = require('../../../app');
 
 const masterSchema = require('../../../data/mockSchemas/master.json');
-const multimediaDocumentContentSchema = require('../../../data/targetSchemas/multimedia_document_content.json');
 const faceDetectValidObject = require('../../../data/mockObjects/face_detect_valid.json');
 const faceDetectNotValidObject = require('../../../data/mockObjects/face_detect_invalid.json');
-const textDocumentSurfaceSchema = require('../../../data/targetSchemas/text_document_surface.json');
+const textDocumentSurfaceSchema = require('../../../data/targetSchemas/document_surface1d.json');
 const tokenValidObject = require('../../../data/mockObjects/token_valid.json');
 const tokenNotValidObject = require('../../../data/mockObjects/token_invalid.json');
 const basicSchema = require('../../../data/batch/schemas/basic.json');
@@ -93,39 +92,6 @@ describe('controllers', function () {
           });
       });
 
-      it('should accept multimedia_document_content schema and a valid faceDetect object', function (done) {
-
-        request(server)
-          .post('/psc-schema-validation-service/object/validate')
-          .send({schema: multimediaDocumentContentSchema, object: faceDetectValidObject})
-          .set('Accept', 'application/json')
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .end(function (err, res) {
-            should.not.exist(err);
-            res.body.should.eql({ isValid: true });
-            done();
-          });
-      });
-
-      it('should return { isValid: false, errors: [] } with multimedia_document_content schema and an invalid faceDetect object', function (done) {
-
-        request(server)
-          .post('/psc-schema-validation-service/object/validate')
-          .send({schema: multimediaDocumentContentSchema, object: faceDetectNotValidObject})
-          .set('Accept', 'application/json')
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .end(function (err, res) {
-            //TODO fix
-            should.not.exist(err);
-            should.exist(res.body.isValid);
-            should.exist(res.body.errors);
-            res.body.isValid.should.eql(false);
-            done();
-          });
-      });
-
       it('should accept master schema and a valid token object', function (done) {
 
         request(server)
@@ -141,7 +107,7 @@ describe('controllers', function () {
           });
       });
 
-      it('should accept text_document_surface schema and a valid token object', function (done) {
+      it('should accept document_surface1d schema and a valid token object', function (done) {
 
         request(server)
           .post('/psc-schema-validation-service/object/validate')
@@ -156,7 +122,7 @@ describe('controllers', function () {
           });
       });
 
-      it('should return { isValid: false, errors: [] } with text_document_surface schema and an invalid token object', function (done) {
+      it('should return { isValid: false, errors: [] } with document_surface1d schema and an invalid token object', function (done) {
 
         request(server)
           .post('/psc-schema-validation-service/object/validate')
