@@ -1,0 +1,141 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "targetType": "document_surface1d",
+  "schemaType": "DesambiguisationTerme",
+  "type": "object",
+  "required": [
+    "schemaType",
+    "_corpusID",
+    "_documentID",
+    "offsets"
+  ],
+  "properties": {
+    "schemaType": {
+      "type": "string",
+      "description": "Schema type",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": true
+    },
+    "_documentID": {
+      "type": "string",
+      "description": "Internal document GUID",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": true
+    },
+    "_corpusID": {
+      "type": "string",
+      "description": "Internal Corpus GUID",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": true
+    },
+    "offsets": {
+      "searchable": true,
+      "locked": true,
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+            "begin": { "type": "integer", "minimum": 0},
+            "end": { "type": "integer", "minimum": 0}
+        }
+      }
+    },
+	"": {
+      "type": "string",
+      "description": "",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+	},
+	"confiance": {
+      "type": "string",
+      "description": "",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+	},
+	"synonyme": {
+      "type": "array",
+      "description": "Liste des synonymes de ce terme.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false,
+      "minItems": 0,
+      "items": {
+        "type": "string"
+	  }
+	},
+	"genre": {
+      "type": "string",
+      "description": "Genre du terme, si spécifié dans le dictionaire.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+	},
+	"nombre": {
+      "type": "string",
+      "description": "Nombre du terme, si spécifié dans le dictionaire.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+	},
+	"langue": {
+      "type": "string",
+      "description": "Langue du terme.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+	},
+    "domaine": {
+      "type": "array",
+      "description": "Liste des domaines associés à ce terme.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false,
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "domaineProximite": {
+      "type": "array",
+      "description": "Liste des domaines indirectement associés à ce terme.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false,
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+	"definition": {
+      "type": "string",
+      "description": "Définition du concept associé à ce terme.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+	},
+	"roleSyntaxique": {
+      "type": "string",
+      "description": "Partie du discours du terme.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+	},
+	"exemple": {
+      "type": "array",
+      "description": "Liste des exemples associés à ce terme.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false,
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+	}
+  }
+}

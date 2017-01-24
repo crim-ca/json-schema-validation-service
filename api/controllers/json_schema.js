@@ -240,7 +240,7 @@ function validateSearchMode(property, searchable) {
 
   // Search mode is mandatory for searchable properties of type string
   if(!property.hasOwnProperty(Config.searchModeKeyword)) {
-    throw new Error(`Mandatory ${Config.searchModeKeyword} keyword is missing in searchable string property: ${property}`)
+    throw new Error(`Mandatory ${Config.searchModeKeyword} keyword is missing in searchable string property: ${JSON.stringify(property)}}`)
   }
 
   let searchMode = property[Config.searchModeKeyword];
@@ -311,13 +311,13 @@ function validateSearchable(property) {
 
   // Searchable is mandatory
   if(!property.hasOwnProperty(Config.searchableKeyword)) {
-    throw new Error(`Mandatory ${Config.searchableKeyword} keyword is missing in property: ${property}`)
+    throw new Error(`Mandatory ${Config.searchableKeyword} keyword is missing in property: ${JSON.stringify(property)}}`)
   }
 
   let searchable = property[Config.searchableKeyword];
   if (searchable) {
     if (!property.hasOwnProperty(Config.typeKeyword)) {
-      throw new Error(`Searchable property is missing mandatory type ${property}`)
+      throw new Error(`Searchable property is missing mandatory type ${JSON.stringify(property)}}`)
     }
     if(!isPrimitiveType(property) && !isSchemaOfSimpleList(property)) {
       throw new Error(`Searchable property must be of primitive type or an homogeneous array of primitive types (or flat objects).
