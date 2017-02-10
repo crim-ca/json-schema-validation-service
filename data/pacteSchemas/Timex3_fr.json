@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "targetType": "document_surface1d",
   "schemaType": "Timex3",
+  "title": "Timex3",
   "type": "object",
   "required": [
     "schemaType",
@@ -21,14 +22,14 @@
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "offsets": {
@@ -39,14 +40,20 @@
       "items": {
         "type": "object",
         "properties": {
-            "begin": { "type": "integer", "minimum": 0},
-            "end": { "type": "integer", "minimum": 0}
+          "begin": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          }
         }
       }
     },
     "tid": {
       "type": "string",
-      "description": "Chaque expression TIMEX3 est identifi� par un identifiant unique.",
+      "description": "Chaque expression TIMEX3 est identifié par un identifiant unique.",
       "searchable": true,
       "searchMode": "exact",
       "locked": true
@@ -66,21 +73,21 @@
     },
     "value": {
       "type": "string",
-      "description": "Valeur en format ISO 8601 �tendu.",
+      "description": "Valeur en format ISO 8601 étendu.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
     },
     "text": {
       "type": "string",
-      "description": "Texte cibl�",
+      "description": "Texte ciblé",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
     },
     "temporalFunction": {
       "type": "boolean",
-      "description": "Indique si l'expression temporelle a besoin d'�tre d�termin�e par l'�valuation d'une fonction temporelle.",
+      "description": "Indique si l'expression temporelle a besoin d'être déterminée par l'évaluation d'une fonction temporelle.",
       "searchable": true,
       "searchMode": "exact",
       "locked": false
@@ -88,8 +95,6 @@
     "mod": {
       "type": "string",
       "description": "Modificateur.",
-      "searchable": true,
-      "searchMode": "exact",
       "enum": [
         "Points.BEFORE",
         "Points.AFTER",
@@ -107,35 +112,35 @@
     },
     "anchorTimeID": {
       "type": "string",
-      "description": "Identifiant de l'expression temporelle � laquelle cette annotation r�f�re.",
+      "description": "Identifiant de l'expression temporelle à laquelle cette annotation réfère.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
     },
     "beginPoint": {
       "type": "string",
-      "description": "Utilis� pour une dur�e ou lorsqu'une annotation est ancr�e par une autre expression.",
+      "description": "Utilisé pour une durée ou lorsqu'une annotation est ancrée par une autre expression.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
     },
     "endPoint": {
       "type": "string",
-      "description": "Utilis� pour une dur�e ou lorsqu'une annotation est ancr�e par une autre expression.",
+      "description": "Utilisé pour une durée ou lorsqu'une annotation est ancrée par une autre expression.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
     },
     "quant": {
       "type": "string",
-      "description": "Utilis� pour le modificateur de type SET. Une cha�ne de caract�re du texte qui quantifie l'expression.",
+      "description": "Utilisé pour le modificateur de type SET. Une chaîne de caractère du texte qui quantifie l'expression.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
     },
     "freq": {
       "type": "string",
-      "description": "Utilis� pour le modificateur de type SET. Contient une valeur enti�re et une granularit� temporelle qui repr�sente la fr�quence de r�currence de l'expression.",
+      "description": "Utilisé pour le modificateur de type SET. Contient une valeur entière et une granularité temporelle qui représente la fréquence de récurrence de l'expression.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false

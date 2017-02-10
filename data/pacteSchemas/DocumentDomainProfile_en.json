@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "targetType": "document",
   "schemaType": "DocumentDomainProfile",
+  "title": "Domain profile",
   "type": "object",
   "required": [
     "schemaType",
@@ -20,57 +21,57 @@
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
-	"domaine1": {
+    "domaine1": {
       "type": "string",
-      "description": "1er domaine prédominant du texte",
+      "description": "1er domaine prÃ©dominant du texte",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"confiance1": {
+    },
+    "confiance1": {
       "type": "number",
-      "description": "Niveau de confiance du 1er domaine prédominant du texte",
+      "description": "Niveau de confiance du 1er domaine prÃ©dominant du texte",
       "searchable": true,
       "searchMode": "fuzzy",
       "locked": false
-	},
-	"domaine2": {
+    },
+    "domaine2": {
       "type": "string",
-      "description": "2e domaine prédominant du texte",
+      "description": "2e domaine prÃ©dominant du texte",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"confiance2": {
+    },
+    "confiance2": {
       "type": "number",
-      "description": "Niveau de confiance du 2e domaine prédominant du texte",
+      "description": "Niveau de confiance du 2e domaine prÃ©dominant du texte",
       "searchable": true,
       "searchMode": "fuzzy",
       "locked": false
-	},
-	"domaine3": {
+    },
+    "domaine3": {
       "type": "string",
-      "description": "3e domaine prédominant du texte",
+      "description": "3e domaine prÃ©dominant du texte",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"confiance3": {
+    },
+    "confiance3": {
       "type": "number",
-      "description": "Niveau de confiance du 3e domaine prédominant du texte",
+      "description": "Niveau de confiance du 3e domaine prÃ©dominant du texte",
       "searchable": true,
       "searchMode": "fuzzy",
       "locked": false
-	}
+    }
   }
 }

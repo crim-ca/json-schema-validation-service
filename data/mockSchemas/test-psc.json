@@ -29,18 +29,10 @@
       "searchMode": "keyword_ws",
       "locked": true
     },
-    "_documentID": {
-      "type": "string",
-      "description": "Internal document GUID",
-      "searchable": true,
-      "searchMode": "keyword_ws",
+    "_documentID": {       "type": "string",       "description": "Internal document GUID",       "searchable": true,       "searchMode": "exact",
       "locked": true
     },
-    "_corpusID": {
-      "type": "string",
-      "description": "Internal Corpus GUID",
-      "searchable": true,
-      "searchMode": "keyword_ws",
+    "_corpusID": {       "type": "string",       "description": "Internal Corpus GUID",       "searchable": true,       "searchMode": "exact",
       "locked": true
     },
     "iWantLess": {

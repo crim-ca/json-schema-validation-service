@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "targetType": "document_surface1d",
   "schemaType": "Timex3",
+  "title": "Timex3",
   "type": "object",
   "required": [
     "schemaType",
@@ -21,14 +22,14 @@
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "offsets": {
@@ -39,8 +40,14 @@
       "items": {
         "type": "object",
         "properties": {
-            "begin": { "type": "integer", "minimum": 0},
-            "end": { "type": "integer", "minimum": 0}
+          "begin": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          }
         }
       }
     },
@@ -88,8 +95,6 @@
     "mod": {
       "type": "string",
       "description": "",
-      "searchable": true,
-      "searchMode": "exact",
       "enum": [
         "Points.BEFORE",
         "Points.AFTER",

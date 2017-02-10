@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     }
   }

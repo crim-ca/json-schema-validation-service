@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "targetType": "document_surface1d",
   "schemaType": "DesambiguisationTerme",
+  "title": "Termes d√©sambigu√Øs√©s",
   "type": "object",
   "required": [
     "schemaType",
@@ -21,14 +22,14 @@
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "offsets": {
@@ -39,27 +40,34 @@
       "items": {
         "type": "object",
         "properties": {
-            "begin": { "type": "integer", "minimum": 0},
-            "end": { "type": "integer", "minimum": 0}
+          "begin": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          }
         }
       }
     },
-	"": {
+    "": {
       "type": "string",
       "description": "",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"confiance": {
+    },
+    "confiance": {
       "type": "string",
       "description": "",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"synonyme": {
+    },
+    "synonyme": {
       "type": "array",
+      "uniqueItems": true,
       "description": "Liste des synonymes de ce terme.",
       "searchable": true,
       "searchMode": "keyword_ws",
@@ -67,32 +75,33 @@
       "minItems": 0,
       "items": {
         "type": "string"
-	  }
-	},
-	"genre": {
+      }
+    },
+    "genre": {
       "type": "string",
-      "description": "Genre du terme, si spÈcifiÈ dans le dictionaire.",
+      "description": "Genre du terme, si sp√©cifi√© dans le dictionaire.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"nombre": {
+    },
+    "nombre": {
       "type": "string",
-      "description": "Nombre du terme, si spÈcifiÈ dans le dictionaire.",
+      "description": "Nombre du terme, si sp√©cifi√© dans le dictionaire.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"langue": {
+    },
+    "langue": {
       "type": "string",
       "description": "Langue du terme.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
+    },
     "domaine": {
       "type": "array",
-      "description": "Liste des domaines associÈs ‡ ce terme.",
+      "uniqueItems": true,
+      "description": "Liste des domaines associ√©s √† ce terme.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false,
@@ -103,7 +112,8 @@
     },
     "domaineProximite": {
       "type": "array",
-      "description": "Liste des domaines indirectement associÈs ‡ ce terme.",
+      "uniqueItems": true,
+      "description": "Liste des domaines indirectement associ√©s √† ce terme.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false,
@@ -112,23 +122,24 @@
         "type": "string"
       }
     },
-	"definition": {
+    "definition": {
       "type": "string",
-      "description": "DÈfinition du concept associÈ ‡ ce terme.",
+      "description": "D√©finition du concept associ√© √† ce terme.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"roleSyntaxique": {
+    },
+    "roleSyntaxique": {
       "type": "string",
       "description": "Partie du discours du terme.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"exemple": {
+    },
+    "exemple": {
       "type": "array",
-      "description": "Liste des exemples associÈs ‡ ce terme.",
+      "uniqueItems": true,
+      "description": "Liste des exemples associ√©s √† ce terme.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false,
@@ -136,6 +147,6 @@
       "items": {
         "type": "string"
       }
-	}
+    }
   }
 }

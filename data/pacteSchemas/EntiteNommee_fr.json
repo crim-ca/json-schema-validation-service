@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "targetType": "document_surface1d",
   "schemaType": "entiteNommee",
+  "title": "Entit√©s nomm√©es",
   "type": "object",
   "required": [
     "schemaType",
@@ -21,32 +22,39 @@
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "offsets": {
       "searchable": true,
       "locked": true,
       "type": "array",
+      "uniqueItems": true,
       "minItems": 1,
       "items": {
         "type": "object",
         "properties": {
-            "begin": { "type": "integer", "minimum": 0},
-            "end": { "type": "integer", "minimum": 0}
+          "begin": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          }
         }
       }
     },
-	"TypeEN": {
+    "TypeEN": {
       "type": "string",
-      "description": "Type d'entitÈ nommÈe.",
+      "description": "Type d'entit√© nomm√©e.",
       "enum": [
         "personne",
         "lieu",
@@ -57,30 +65,31 @@
       "searchMode": "keyword_ws",
       "locked": true
     },
-	"TypeEn_Wikipedia": {
+    "TypeEn_Wikipedia": {
       "type": "array",
-      "description": "Type de l'entitÈ sur Wikipedia",
+      "uniqueItems": true,
+      "description": "Type de l'entit√© sur Wikipedia",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false,
-	  "minItems": 0,
+      "minItems": 0,
       "items": {
         "type": "string"
-	  }
-	},
-	"description": {
+      }
+    },
+    "description": {
       "type": "string",
-      "description": "Description de l'entitÈ",
+      "description": "Description de l'entit√©",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"wikipedia": {
+    },
+    "wikipedia": {
       "type": "string",
-      "description": "URL de rÈfÈrence de l'entitÈ sur Wikipedia",
+      "description": "URL de r√©f√©rence de l'entit√© sur Wikipedia",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	}
+    }
   }
 }

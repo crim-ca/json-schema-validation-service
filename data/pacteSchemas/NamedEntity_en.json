@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "targetType": "document_surface1d",
   "schemaType": "NamedEntity",
+  "title": "Named Entity",
   "type": "object",
   "required": [
     "schemaType",
@@ -21,14 +22,14 @@
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "offsets": {
@@ -39,12 +40,18 @@
       "items": {
         "type": "object",
         "properties": {
-            "begin": { "type": "integer", "minimum": 0},
-            "end": { "type": "integer", "minimum": 0}
+          "begin": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          }
         }
       }
     },
-	"TypeNE": {
+    "TypeNE": {
       "type": "string",
       "description": "Named entity's type.",
       "enum": [
@@ -57,30 +64,31 @@
       "searchMode": "keyword_ws",
       "locked": true
     },
-	"TypeEn_Wikipedia": {
+    "TypeEn_Wikipedia": {
       "type": "array",
+      "uniqueItems": true,
       "description": "Type of entity on Wikipedia.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false,
-	  "minItems": 0,
+      "minItems": 0,
       "items": {
         "type": "string"
-	  }
-	},
-	"description": {
+      }
+    },
+    "description": {
       "type": "string",
       "description": "Description of the named entity.",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	},
-	"wikipedia": {
+    },
+    "wikipedia": {
       "type": "string",
       "description": "Reference URL for the entityt on Wikipedia",
       "searchable": true,
       "searchMode": "keyword_ws",
       "locked": false
-	}
+    }
   }
 }
