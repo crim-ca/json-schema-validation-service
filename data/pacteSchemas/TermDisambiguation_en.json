@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "targetType": "document_surface1d",
+  "schemaType": "DesambiguisationTerme",
+  "title": "Desambiguated terms",
+  "type": "object",
+  "required": [
+    "schemaType",
+    "_corpusID",
+    "_documentID",
+    "offsets"
+  ],
+  "properties": {
+    "schemaType": {
+      "type": "string",
+      "description": "Schema type",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": true
+    },
+    "_documentID": {
+      "type": "string",
+      "description": "Internal document GUID",
+      "searchable": true,
+      "searchMode": "exact",
+      "locked": true
+    },
+    "_corpusID": {
+      "type": "string",
+      "description": "Internal Corpus GUID",
+      "searchable": true,
+      "searchMode": "exact",
+      "locked": true
+    },
+    "offsets": {
+      "searchable": true,
+      "locked": true,
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "begin": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "": {
+      "type": "string",
+      "description": "Type of term.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+    },
+    "confidence": {
+      "type": "string",
+      "description": "Confidence level of the disambiguation.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+    },
+    "synonym": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "List of synonyms for this term.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false,
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "genre": {
+      "type": "string",
+      "description": "Genre of the term.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+    },
+    "number": {
+      "type": "string",
+      "description": "Number of the term.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+    },
+    "language": {
+      "type": "string",
+      "description": "Term's language.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+    },
+    "domain": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "List of domain for this term.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false,
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "nearDomain": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "List of closely related domains.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false,
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "definition": {
+      "type": "string",
+      "description": "Description of the associated concept.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+    },
+    "pos": {
+      "type": "string",
+      "description": "Part-os-speech of this term.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false
+    },
+    "example": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "List of examples for this term.",
+      "searchable": true,
+      "searchMode": "keyword_ws",
+      "locked": false,
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

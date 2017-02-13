@@ -18,6 +18,7 @@
   "searchableKeyword" : "searchable",
   "fuzzySearchMode":"fuzzy",
   "searchModes": [
+    "exact",
     "keyword_ws",
     "keyword_custom",
     "fuzzy_with_stop",

@@ -37,14 +37,14 @@
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchMode": "exact",
       "locked": true
     },
     "begin": {
@@ -81,7 +81,11 @@
       "description": "Face detection poseType [ -2: 'Low', -1: 'Left profile', 0: 'Frontal', 1: 'Right profile', 2: 'High' ]",
       "type": "number",
       "enum": [
-        -2, -1, 0, 1, 2
+        -2,
+        -1,
+        0,
+        1,
+        2
       ],
       "default": 0
     }
