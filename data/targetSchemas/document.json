@@ -13,21 +13,21 @@
       "type": "string",
       "description": "Schema type",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     }
   }

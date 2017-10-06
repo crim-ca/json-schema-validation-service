@@ -14,63 +14,63 @@
       "type": "string",
       "description": "Schema type",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "domaine1": {
       "type": "string",
       "description": "1er domaine prédominant du texte",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "confiance1": {
       "type": "number",
       "description": "Niveau de confiance du 1er domaine prédominant du texte",
       "searchable": true,
-      "searchMode": "fuzzy",
+      "searchModes": ["basic"],
       "locked": false
     },
     "domaine2": {
       "type": "string",
       "description": "2e domaine prédominant du texte",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "confiance2": {
       "type": "number",
       "description": "Niveau de confiance du 2e domaine prédominant du texte",
       "searchable": true,
-      "searchMode": "fuzzy",
+      "searchModes": ["basic"],
       "locked": false
     },
     "domaine3": {
       "type": "string",
       "description": "3e domaine prédominant du texte",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "confiance3": {
       "type": "number",
       "description": "Niveau de confiance du 3e domaine prédominant du texte",
       "searchable": true,
-      "searchMode": "fuzzy",
+      "searchModes": ["basic"],
       "locked": false
     }
   }

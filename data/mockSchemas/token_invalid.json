@@ -32,23 +32,21 @@
     },
     "schemaType": {
       "type": "string",
-      "description": "Schema type",
-      "searchable": true,
-      "searchMode": "keyword_ws",
+      "description": "Schema type",      "searchable": true,      "searchModes": ["noop"],
       "locked": true
     },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "offsets": {
@@ -96,7 +94,7 @@
       ],
       "description": " vers le tagset?",
       "searchable": true,
-      "searchMode": "keyword_ws"
+      "searchModes": ["basic"]
     },
     "kind": {
       "description": "",

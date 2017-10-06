@@ -34,35 +34,35 @@
       "type": "string",
       "description": "Schema type",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "begin": {
       "type": "number",
       "description": "Annotation starting time in miliseconds",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": true
     },
     "end": {
       "type": "number",
       "description": "Annotation ending time in miliseconds",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": true
     },
     "confidence": {
@@ -71,7 +71,7 @@
       "type": "number",
       "description": "Confidence degree",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": true
     },
     "faceId": {

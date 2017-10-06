@@ -15,21 +15,21 @@
       "type": "string",
       "description": "Schema type",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "offsets": {
@@ -55,14 +55,14 @@
       "type": "string",
       "description": "",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "confiance": {
       "type": "string",
       "description": "",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "synonyme": {
@@ -70,7 +70,7 @@
       "uniqueItems": true,
       "description": "Liste des synonymes de ce terme.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false,
       "minItems": 0,
       "items": {
@@ -81,21 +81,21 @@
       "type": "string",
       "description": "Genre du terme, si spécifié dans le dictionaire.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "nombre": {
       "type": "string",
       "description": "Nombre du terme, si spécifié dans le dictionaire.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "langue": {
       "type": "string",
       "description": "Langue du terme.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "domaine": {
@@ -103,7 +103,7 @@
       "uniqueItems": true,
       "description": "Liste des domaines associés à ce terme.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false,
       "minItems": 0,
       "items": {
@@ -115,7 +115,7 @@
       "uniqueItems": true,
       "description": "Liste des domaines indirectement associés à ce terme.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false,
       "minItems": 0,
       "items": {
@@ -126,14 +126,14 @@
       "type": "string",
       "description": "Définition du concept associé à ce terme.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "roleSyntaxique": {
       "type": "string",
       "description": "Partie du discours du terme.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "exemple": {
@@ -141,7 +141,7 @@
       "uniqueItems": true,
       "description": "Liste des exemples associés à ce terme.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false,
       "minItems": 0,
       "items": {

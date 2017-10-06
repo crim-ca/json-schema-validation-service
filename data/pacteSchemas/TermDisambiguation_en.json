@@ -15,21 +15,21 @@
       "type": "string",
       "description": "Schema type",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "offsets": {
@@ -55,14 +55,14 @@
       "type": "string",
       "description": "Type of term.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "confidence": {
       "type": "string",
       "description": "Confidence level of the disambiguation.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "synonym": {
@@ -70,7 +70,7 @@
       "uniqueItems": true,
       "description": "List of synonyms for this term.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false,
       "minItems": 0,
       "items": {
@@ -81,21 +81,21 @@
       "type": "string",
       "description": "Genre of the term.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "number": {
       "type": "string",
       "description": "Number of the term.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "language": {
       "type": "string",
       "description": "Term's language.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "domain": {
@@ -103,7 +103,7 @@
       "uniqueItems": true,
       "description": "List of domain for this term.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false,
       "minItems": 0,
       "items": {
@@ -115,7 +115,7 @@
       "uniqueItems": true,
       "description": "List of closely related domains.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false,
       "minItems": 0,
       "items": {
@@ -126,14 +126,14 @@
       "type": "string",
       "description": "Description of the associated concept.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "pos": {
       "type": "string",
       "description": "Part-os-speech of this term.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "example": {
@@ -141,7 +141,7 @@
       "uniqueItems": true,
       "description": "List of examples for this term.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false,
       "minItems": 0,
       "items": {
