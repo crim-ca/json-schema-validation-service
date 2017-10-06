@@ -14,15 +14,16 @@
   "arrayKeyword": "array",
   "itemsKeyword": "items",
   "propertiesKeyword": "properties",
-  "searchModeKeyword": "searchMode",
+  "searchModeKeyword": "searchModes",
   "searchableKeyword" : "searchable",
-  "fuzzySearchMode":"fuzzy",
+  "languageSearchMode":"language",
   "searchModes": [
-    "exact",
-    "keyword_ws",
-    "keyword_custom",
-    "fuzzy_with_stop",
-    "fuzzy"
+    "noop",
+    "basic",
+    "edge",
+    "path",
+    "ngram",
+    "language"
   ],
   "primitiveTypes": ["integer", "number", "string", "boolean"],
   "languageKeyword": "language",

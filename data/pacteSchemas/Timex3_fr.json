@@ -15,21 +15,21 @@
       "type": "string",
       "description": "Schema type",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "offsets": {
@@ -55,7 +55,7 @@
       "type": "string",
       "description": "Chaque expression TIMEX3 est identifié par un identifiant unique.",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": true
     },
     "type": {
@@ -68,28 +68,28 @@
         "SET"
       ],
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": true
     },
     "value": {
       "type": "string",
       "description": "Valeur en format ISO 8601 étendu.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "text": {
       "type": "string",
       "description": "Texte ciblé",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "temporalFunction": {
       "type": "boolean",
       "description": "Indique si l'expression temporelle a besoin d'être déterminée par l'évaluation d'une fonction temporelle.",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": ["noop"],
       "locked": false
     },
     "mod": {
@@ -114,35 +114,35 @@
       "type": "string",
       "description": "Identifiant de l'expression temporelle à laquelle cette annotation réfère.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "beginPoint": {
       "type": "string",
       "description": "Utilisé pour une durée ou lorsqu'une annotation est ancrée par une autre expression.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "endPoint": {
       "type": "string",
       "description": "Utilisé pour une durée ou lorsqu'une annotation est ancrée par une autre expression.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "quant": {
       "type": "string",
       "description": "Utilisé pour le modificateur de type SET. Une chaîne de caractère du texte qui quantifie l'expression.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     },
     "freq": {
       "type": "string",
       "description": "Utilisé pour le modificateur de type SET. Contient une valeur entière et une granularité temporelle qui représente la fréquence de récurrence de l'expression.",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": ["basic"],
       "locked": false
     }
   }

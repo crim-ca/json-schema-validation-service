@@ -1,8 +1,8 @@
 'use strict';
 
 const util = require('util'),
-      Ajv = require('ajv'),
-      Config = require('../../config.json');
+  Ajv = require('ajv'),
+  Config = require('../../config.json');
 
 module.exports = {
   validateSchema: validateSchema,
@@ -10,7 +10,7 @@ module.exports = {
   validateMetaschema: validateMetaschema,
   validateTargetType: validateTargetType,
   isSupersetOfPrimitiveArray: isSupersetOfPrimitiveArray,
-  validateSubSchema : validateSubSchema,
+  validateSubSchema: validateSubSchema,
   validateSearchEngineConstraints: validateSearchEngineConstraints,
   validatePscConstraints: validatePscConstraints,
   isSchemaOfSimpleList: isSchemaOfSimpleList
@@ -23,13 +23,13 @@ function validateSchema(req, res) {
 
   try {
     ajv.compile(schema);  // Draft v4 seems implied by the ajv //API
-    executeValidation(req.swagger.params.body.originalValue.schema, function(response, errors){
-      if(response){
+    executeValidation(req.swagger.params.body.originalValue.schema, function (response, errors) {
+      if (response) {
         res.status(200);
         res.json({
           isValid: true
         });
-      }else{
+      } else {
         console.log(errors.length);
         res.status(200);
         res.json({
@@ -50,7 +50,7 @@ function validateSchema(req, res) {
 
 }
 
-function executeValidation(schema, callback){
+function executeValidation(schema, callback) {
   var response = true;
   var errors = [];
 
@@ -198,7 +198,7 @@ function isSingleSchemaOfTypeString(schema) {
 function isTypeString(property) {
   if (property.hasOwnProperty(Config.typeKeyword)) {
     let value = property[Config.typeKeyword];
-    if(value === "string") {
+    if (value === "string") {
       return true;
     } else if (value === "array" && isSingleSchemaOfTypeString(value)) {
       return true;
@@ -209,17 +209,17 @@ function isTypeString(property) {
 }
 
 function validateLanguage(property, searchMode) {
-  // Language is only used for fuzzy search mode
-  if (searchMode !== Config.fuzzySearchMode) {
+  // Language is only used for language search mode
+  if (searchMode !== Config.languageSearchMode) {
     return true;
   }
 
-  if (searchMode === Config.fuzzySearchMode && !property.hasOwnProperty(Config.languageKeyword)) {
+  if (searchMode === Config.languageSearchMode && !property.hasOwnProperty(Config.languageKeyword)) {
     throw new Error(`Missing mandatory searchMode for property ${JSON.stringify(property)}`)
   }
 
   let language = property[Config.languageKeyword];
-  if(!isElementOneOf(language, Config.languages)) {
+  if (!isElementOneOf(language, Config.languages)) {
     throw new Error(`Invalid language for property ${JSON.stringify(property)}.
 -Accepted Config.languages: ${Config.languages.toString()}`)
   }
@@ -228,27 +228,34 @@ function validateLanguage(property, searchMode) {
 }
 
 function validateSearchMode(property, searchable) {
-  // searchMode is mandatory only for searchable properties.
+  // searchModes is mandatory only for searchable properties.
   if (!searchable) {
     return true;
   }
 
-  // searchMode is mandatory only for properties of type string or string list.
+  // searchModes is mandatory only for properties of type string or string list.
   if (!isTypeString(property)) {
     return true;
   }
 
   // Search mode is mandatory for searchable properties of type string
-  if(!property.hasOwnProperty(Config.searchModeKeyword)) {
+  if (!property.hasOwnProperty(Config.searchModeKeyword)) {
     throw new Error(`Mandatory ${Config.searchModeKeyword} keyword is missing in searchable string property: ${JSON.stringify(property)}}`)
   }
 
-  let searchMode = property[Config.searchModeKeyword];
-  if(!isElementOneOf(searchMode, Config.searchModes)) {
-    throw new Error(`Invalid search mode for property ${JSON.stringify(property)}`)
+  let searchModes = property[Config.searchModeKeyword];
+  if (!Array.isArray(searchModes)) {
+    throw new Error(`Search mode must be a list. Property ${JSON.stringify(property)}`)
   }
 
-  return validateLanguage(property, searchMode)
+  searchModes.forEach(function (mode) {
+    if (!isElementOneOf(mode, Config.searchModes)) {
+      throw new Error(`Invalid search mode for property ${JSON.stringify(property)}`)
+    }
+  });
+
+
+  return validateLanguage(property, searchModes)
 }
 
 function isPrimitiveType(property) {
@@ -288,10 +295,10 @@ function isSchemaOfFlatObject(schema) {
 
   // Each property must be of primitive type (no lists or nested objects allowed)
   for (var propertyKey in schema.properties) {
-      let property = schema.properties[propertyKey];
-      if (!property.hasOwnProperty(Config.typeKeyword) || !isPrimitiveType(property)) {
-        return false;
-      }
+    let property = schema.properties[propertyKey];
+    if (!property.hasOwnProperty(Config.typeKeyword) || !isPrimitiveType(property)) {
+      return false;
+    }
   }
 
   return true
@@ -310,7 +317,7 @@ function validateSearchable(property) {
   validateBooleanKeyword(property, Config.searchableKeyword);
 
   // Searchable is mandatory
-  if(!property.hasOwnProperty(Config.searchableKeyword)) {
+  if (!property.hasOwnProperty(Config.searchableKeyword)) {
     throw new Error(`Mandatory ${Config.searchableKeyword} keyword is missing in property: ${JSON.stringify(property)}}`)
   }
 
@@ -319,7 +326,7 @@ function validateSearchable(property) {
     if (!property.hasOwnProperty(Config.typeKeyword)) {
       throw new Error(`Searchable property is missing mandatory type ${JSON.stringify(property)}}`)
     }
-    if(!isPrimitiveType(property) && !isSchemaOfSimpleList(property)) {
+    if (!isPrimitiveType(property) && !isSchemaOfSimpleList(property)) {
       throw new Error(`Searchable property must be of primitive type or an homogeneous array of primitive types (or flat objects).
  -Property: ${JSON.stringify(property)}`)
     }
@@ -331,7 +338,7 @@ function validateSearchable(property) {
 // Special constraints due to the use of a textual search engine
 // keyword, default
 // searchable, true
-// searchMode, fuzzy
+// searchMode, (no default)
 // language, (no default)
 // locked, false
 // Note: this function will only validate the constraints on simple types and lists of simple types. We are excluding:

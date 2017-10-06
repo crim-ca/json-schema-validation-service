@@ -24,9 +24,7 @@
     },
     "schemaType": {
       "type": "string",
-      "description": "Schema type",
-      "searchable": true,
-      "searchMode": "keyword_ws",
+      "description": "Schema type",      "searchable": true,      "searchModes": ["noop"],
       "locked": true
     }
   }

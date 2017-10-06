@@ -26,28 +26,36 @@
       "type": "string",
       "description": "Schema type",
       "searchable": true,
-      "searchMode": "keyword_ws",
+      "searchModes": [
+        "noop"
+      ],
       "locked": true
     },
     "_documentID": {
       "type": "string",
       "description": "Internal document GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": [
+        "noop"
+      ],
       "locked": true
     },
     "_corpusID": {
       "type": "string",
       "description": "Internal Corpus GUID",
       "searchable": true,
-      "searchMode": "exact",
+      "searchModes": [
+        "noop"
+      ],
       "locked": true
     },
     "iWantLess": {
       "type": "string",
       "description": "You sing this less corrosion to me",
       "searchable": true,
-      "searchMode": "fuzzy_with_stop"
+      "searchModes": [
+        "language"
+      ]
     },
     "iWantNone": {
       "type": "string",
@@ -59,7 +67,9 @@
       "type": "string",
       "description": "You sing this moar corrosion to me",
       "searchable": true,
-      "searchMode": "fuzzy_with_stop"
+      "searchModes": [
+        "language"
+      ]
     }
   }
 }
